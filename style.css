@@ -1,0 +1,225 @@
+header,
+nav {
+    text-align: center;
+    height: 150px;
+}
+
+
+/* img {
+    width: 300px;
+    height: 200px;
+} */
+
+input {
+    padding: 15px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid red;
+    font-size: large;
+    width: 86px !important;
+}
+
+
+/* .coins:nth-child(even) { */
+
+
+/* .coins:nth-child(odd) {
+    border: 2px solid black;
+    background-color: cadetblue;
+    width: 230px;
+    height: 140px;
+    float: left;
+    text-align: left;
+    margin: 9px;
+    padding-left: 3px;
+    box-shadow: 4px 4px 6px chocolate;
+    border-radius: 25px;
+    background-position: left top;
+    background-repeat: repeat;
+    padding: 20px;
+}*/
+
+.card {
+    float: left;
+    text-align: left;
+    margin-top: 2%;
+    padding: 6px;
+}
+
+button {
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+/* parallax */
+
+.parallax {
+    /* The image used */
+    background-image: url('techanalysis-alts4-500x300.jpg');
+    /* Full height */
+    height: 100%;
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+/* .parallax1 {
+    The image used
+    background-image: url('socool.jpeg');
+    Full height
+    height: 50%;
+    Create the parallax scrolling effect
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+} */
+
+body,
+html {
+    height: 100%;
+    margin: 0;
+    font: 400 15px/1.8 "Lato", sans-serif;
+    color: #777;
+}
+
+.bgimg-1,
+.bgimg-2,
+.bgimg-3 {
+    position: relative;
+    opacity: 0.85;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bgimg-1 {
+    background-image: url("socool.jpeg");
+    min-height: 100%;
+}
+
+
+/* .bgimg-2 {
+    background-image: url("socool.jpeg");
+    min-height: 400px;
+}
+
+.bgimg-3 {
+    background-image: url("techanalysis-alts4-500x300.jpg");
+    min-height: 400px;
+} */
+
+.caption {
+    position: absolute;
+    left: 0;
+    top: 35%;
+    width: 100%;
+    text-align: center;
+    color: #000;
+}
+
+.caption span.border {
+    background-color: #111;
+    color: #fff;
+    padding: 20px;
+    font-size: 35px;
+    letter-spacing: 10px;
+}
+
+
+/* Turn off parallax scrolling for tablets and phones */
+
+
+/* @media only screen and (max-device-width: 1024px) {
+    .bgimg-1,
+    .bgimg-2,
+    .bgimg-3 {
+        background-attachment: scroll;
+    }
+} */
+
+
+/*switch*/
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+
+/* Rounded sliders */
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
