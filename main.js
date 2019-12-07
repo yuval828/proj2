@@ -33,6 +33,7 @@ $(() => {
 
     function displayCoin(Coin) {
         let obj = drawCoin(Coin);
+        $("#allCoins").empty();
         $("#allCoins").append(obj);
     }
 
