@@ -3,12 +3,15 @@
 
 $(() => {
     let allCoinsArray = [];
+    let MoreInfoArray = [];
     getAjaxData("https://api.coingecko.com/api/v3/coins/list", response => displayCoins(response));
 
 
-    $(".getInfo").click(() => {
-        getAjaxData(`https://api.coingecko.com/api/v3/coins/${item.id}`, response => displayMoreInfo(response));
-    });
+
+
+    // $("div").click(() => {
+    //     getAjaxData(`https://api.coingecko.com/api/v3/coins/${allCoinsArray.id}`, response => displayMoreInfo(response));
+    // });
 
 
     function getAjaxData(url, callback) {
@@ -38,63 +41,30 @@ $(() => {
 
 
     function drawCoin(item) { //a single coin draw
-
         const str = `
-    <div class="coinDiv col-xl-4 col-lg-4 col-md-4 col-sm-12 " >
-        <div class="card-body row ">
-            <h5 class="card-title col-xl-8 col-lg-8 col-md-8 col-sm-8 col-7">${item.symbol}</h5>
-            <label class="switch ">
-                <input type="checkbox">
-                <span class="slider round"></span>
-            </label>
-        </div>
-        <hr>
-            <p class="card-text">${item.name}</p>
-            <p>
-                <button class="btn btn-primary getInfo" type="button" data-toggle="collapse" data-target="#collapse${item.symbol}" aria-expanded="false" aria-controls="collapse">
-                    More Info
-                </button>
-            </p>
-            <div class="collapse" id="collapse${item.symbol}">
-                <div class="card card-body">
-               
-                </div>
+        <div class="coinDiv col-xl-4 col-lg-4 col-md-4 col-sm-12 " >
+            <div class="card-body row">
+                <h5 class="card-title col-xl-8 col-lg-8 col-md-8 col-sm-8 col-7">${item.symbol}</h5>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
             </div>
-        
-    </div>
+            <hr>
+                <p class="card-text">${item.name}</p>
+                <p>
+                    <button class="btn btn-primary getInfo" id="${item.id}" data-toggle="collapse" data-target="#collapse${item.id}" aria-expanded="false" aria-controls="collapse">
+                        More Info
+                    </button>
+                </p>
+                <div class="collapse" id="collapse${item.id}">
+                   
+                </div>
+            
+        </div>
         `;
         return str;
 
-
-
-
-
-
-
-
-        // const str = `
-        //         <div class="card-body col-xl-4 col-lg-4 col-md-4 col-sm-4 row justify-content-between " >
-        //                 <h5 class="card-title">${item.symbol}</h5>  
-
-        //                 <label class="switch">
-        //                     <input type="checkbox">
-        //                     <span class="slider round"></span>
-        //                 </label>  
-
-        //                 <p class="card-text">${item.name}</p>
-        //                 <p>
-        //                     <button class="btn btn-primary getInfo" type="button" data-toggle="collapse" data-target="#collapse${item.symbol}" aria-expanded="false" aria-controls="collapse">
-        //                       More Info
-        //                     </button>
-        //                 </p>
-        //                 <div class="collapse" id="collapse${item.symbol}">
-        //                     <div class="card card-body">
-
-        //                     </div>
-        //                 </div>
-
-        //         </div> `;
-        //         return str;
     }
 
     //search a coin
@@ -102,21 +72,22 @@ $(() => {
         let searchCoin = $("input").val();
         if (searchCoin == "") {
             alert("please enter a Symbol name: like BTC or Name: like bitcoin");
-        } else {
-            $.grep(allCoinsArray, function(obj) {
-                if (obj.symbol === searchCoin) {
-                    displayCoin(obj);
-                }
-                return;
-            })[0];
-            $.grep(allCoinsArray, function(obj) {
-                if (obj.name === searchCoin) {
-                    displayCoin(obj);
-                }
-                return;
-            })[0];
-            alert(`you didnt enter a correct coin please enter a Symbol name: like BTC or Name: like bitcoin`);
+            return;
         }
+        $.grep(allCoinsArray, function(obj) {
+            if (obj.symbol === searchCoin) {
+                displayCoin(obj);
+            }
+            return;
+        })[0];
+        $.grep(allCoinsArray, function(obj) {
+            if (obj.name === searchCoin) {
+                displayCoin(obj);
+            }
+            return;
+        })[0];
+        // alert(`you didnt enter a correct coin please enter a Symbol name: like BTC or Name: like bitcoin`);
+
     });
 
 
@@ -126,20 +97,44 @@ $(() => {
         $("#allCoins").append(str);
     }
 
+
+    $("div").click(function(e) {
+        let obj1 = e.target.closest(".getInfo");
+        $.grep(MoreInfoArray, function(obj) {
+            if (obj.id === obj1.id) {
+                displayMoreInfo(obj1);
+            }
+            return;
+        })[0];
+        // for (const obj of MoreInfoArray) {
+        //     for(obj.id in MoreInfoArray){
+        //     displayMoreInfo(obj);
+        //     return;
+        // }
+
+        getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj.id)}`, response => displayMoreInfo(response));
+
+    });
+
+
     //get More Info for coin - and then store it for 2 min for local usage
-    function displayMoreInfo(id) {
+    function displayMoreInfo(obj) {
+        // setInterval(() => {
+        MoreInfoArray.push(obj);
+        // }, 20000);
+        $(`#collapse${obj.id}`).empty(); // לדיב אם רוצים כרקע style="background-image: url(${obj.image.large}); background-repeat: no-repeat";
         const str = `
-        <div class="collapse" id="collapse${item.symbol}">
-           <div class="card-body">
-                <h5 class="card-title">${id.data_market.current_price.usd}</h5>
-                <h5 class="card-title">${id.data_market.current_price.euro}</h5>
-                <h5 class="card-title">${id.data_market.current_price.nis}</h5>
+            <div class="card-body">
+                <h5><u>Current Price:</u></h5>
+                <p class="card-title">Dollar: ${obj.market_data.current_price.usd}&dollar;</p>
+                <p class="card-title">Euro: ${obj.market_data.current_price.eur}&euro;</p>
+                <p class="card-title">NIS: ${obj.market_data.current_price.ils}&#8362;</p>
                 <span>
-                  <img class="imgCountry" src="${id.image.small}" >
+                  <img class="imgCountry" src="${obj.image.large}" >
                 </span>                  
-            </div>
-        </div>`;
-        $("#allCoins").append(str);
+            </div>`;
+
+        $(`#collapse${obj.id}`).append(str);
     }
 
 
