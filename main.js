@@ -32,7 +32,7 @@ $(() => {
 
 
     function displayCoin(Coin) {
-        drewCoin(Coin);
+        let obj = drawCoin(Coin);
         $("#allCoins").append(obj);
     }
 
@@ -44,7 +44,7 @@ $(() => {
         for (const item of Coins) {
             i++;
             if (i <= 10) {
-                drewCoin(item);
+                let obj = drawCoin(item);
 
                 $("#allCoins").append(obj);
                 var coinsArr = arr.push(item);
@@ -70,7 +70,7 @@ $(() => {
     }
 
 
-    function drewCoin(item) {
+    function drawCoin(item) {
         const obj = `
                     <div class="card col-xl-4 col-lg-4 col-md-4 col-sm-12" >
                     <div class="card-body">
