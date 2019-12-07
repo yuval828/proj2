@@ -38,63 +38,29 @@ $(() => {
 
 
     function drawCoin(item) { //a single coin draw
-
         const str = `
-    <div class="coinDiv col-xl-4 col-lg-4 col-md-4 col-sm-12 " >
-        <div class="card-body row ">
-            <h5 class="card-title col-xl-8 col-lg-8 col-md-8 col-sm-8 col-7">${item.symbol}</h5>
-            <label class="switch ">
-                <input type="checkbox">
-                <span class="slider round"></span>
-            </label>
-        </div>
-        <hr>
-            <p class="card-text">${item.name}</p>
-            <p>
-                <button class="btn btn-primary getInfo" type="button" data-toggle="collapse" data-target="#collapse${item.symbol}" aria-expanded="false" aria-controls="collapse">
-                    More Info
-                </button>
-            </p>
-            <div class="collapse" id="collapse${item.symbol}">
-                <div class="card card-body">
-               
+        <div class="card-body col-xl-4 col-lg-4 col-md-4 col-sm-4 row " >
+                <h5 class="card-title">${item.symbol}</h5>  
+          
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>  
+           
+                <p class="card-text">${item.name}</p>
+                <p>
+                    <button class="btn btn-primary getInfo" type="button" data-toggle="collapse" data-target="#collapse${item.symbol}" aria-expanded="false" aria-controls="collapse">
+                      More Info
+                    </button>
+                </p>
+                <div class="collapse" id="collapse${item.symbol}">
+                    <div class="card card-body">
+                    
+                    </div>
                 </div>
-            </div>
-        
-    </div>
-        `;
+                  
+        </div> `;
         return str;
-
-
-
-
-
-
-
-
-        // const str = `
-        //         <div class="card-body col-xl-4 col-lg-4 col-md-4 col-sm-4 row justify-content-between " >
-        //                 <h5 class="card-title">${item.symbol}</h5>  
-
-        //                 <label class="switch">
-        //                     <input type="checkbox">
-        //                     <span class="slider round"></span>
-        //                 </label>  
-
-        //                 <p class="card-text">${item.name}</p>
-        //                 <p>
-        //                     <button class="btn btn-primary getInfo" type="button" data-toggle="collapse" data-target="#collapse${item.symbol}" aria-expanded="false" aria-controls="collapse">
-        //                       More Info
-        //                     </button>
-        //                 </p>
-        //                 <div class="collapse" id="collapse${item.symbol}">
-        //                     <div class="card card-body">
-
-        //                     </div>
-        //                 </div>
-
-        //         </div> `;
-        //         return str;
     }
 
     //search a coin
