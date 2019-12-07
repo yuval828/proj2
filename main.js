@@ -57,7 +57,7 @@ $(() => {
     function displayMoreInfo(id) {
         const obj = `
          <div class="collapse" id="collapse${item.symbol}">
-            <div class="card card-body">
+            <div class="card-body">
             <h5 class="card-title">${id.data_market.current_price.usd}</h5>
             <h5 class="card-title">${id.data_market.current_price.euro}</h5>
             <h5 class="card-title">${id.data_market.current_price.nis}</h5>
@@ -73,7 +73,7 @@ $(() => {
 
     function drawCoin(item) {
         const obj = `
-                    <div class="card col-xl-4 col-lg-4 col-md-4 col-sm-12" >
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12" >
                     <div class="card-body">
                     <label class="switch">
                         <input type="checkbox">
