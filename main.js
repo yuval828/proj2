@@ -32,8 +32,8 @@ $(() => {
         for (const item of Coins) { //can run on allCoinsArray and dont need if and index
             i++;
             if (i <= 10) {
-                let str = drawCoin(item);
-                $("#allCoins").append(str);
+                let el = drawCoin(item);
+                $("#allCoins").append(el);
                 // var coinsArr = arr.push(item); 
             } //else return coinsArr;
         }
@@ -63,7 +63,29 @@ $(() => {
             
         </div>
         `;
-        return str;
+
+        const el = $(str)[0];
+
+
+        $(".getInfo", el).click(function(e) {
+            let obj1 = e.currentTarget
+            $.grep(MoreInfoArray, function(obj) {
+                if (obj.id === obj1.id) {
+                    displayMoreInfo(obj1);
+                }
+                return;
+            })[0];
+            // for (const obj of MoreInfoArray) {
+            //     for(obj.id in MoreInfoArray){
+            //     displayMoreInfo(obj);
+            //     return;
+            // }
+    
+            getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj.id)}`, response => displayMoreInfo(response));
+    
+        });
+        return el
+    
 
     }
 
@@ -92,29 +114,12 @@ $(() => {
 
 
     function displayCoin(Coin) {
-        let str = drawCoin(Coin);
+        let el = drawCoin(Coin);
         $("#allCoins").empty();
-        $("#allCoins").append(str);
+        $("#allCoins").append(el);
     }
 
 
-    $("div").click(function(e) {
-        let obj1 = e.target.closest(".getInfo");
-        $.grep(MoreInfoArray, function(obj) {
-            if (obj.id === obj1.id) {
-                displayMoreInfo(obj1);
-            }
-            return;
-        })[0];
-        // for (const obj of MoreInfoArray) {
-        //     for(obj.id in MoreInfoArray){
-        //     displayMoreInfo(obj);
-        //     return;
-        // }
-
-        getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj.id)}`, response => displayMoreInfo(response));
-
-    });
 
 
     //get More Info for coin - and then store it for 2 min for local usage
