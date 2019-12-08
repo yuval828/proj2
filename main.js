@@ -130,6 +130,14 @@ $(() => {
         $(`#collapse${obj.id}`).empty(); // לדיב אם רוצים כרקע style="background-image: url(${obj.image.large}); background-repeat: no-repeat";
         $(`#collapse${obj.id}`).addClass("loader");
         const str = `
+            <p>
+            <button class="btn btn-primary getInfo" id="${obj.id}" data-toggle="collapse" data-target="#collapse${obj.id}" aria-expanded="false" aria-controls="collapse">
+                Close Info
+            </button>
+            </p>
+            <div class="collapse" id="collapse${obj.id}">
+            
+            </div>
             <div class="card-body">
                 <h5><u>Current Price:</u></h5>
                 <p class="card-title">Dollar: ${obj.market_data.current_price.usd}&dollar;</p>
