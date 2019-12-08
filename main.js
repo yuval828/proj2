@@ -33,9 +33,9 @@ $(() => {
         for (const item of Coins) { //can run on allCoinsArray and dont need if and index
             i++;
             if (i <= 10) {
-                let str = drawOneCoin(item);
+                let el = drawOneCoin(item);
                 $(`#allCoins`).removeClass("loader");
-                $("#allCoins").append(str);
+                $("#allCoins").append(el);
                 // var coinsArr = arr.push(item); 
             } //else return coinsArr;
         }
@@ -65,9 +65,36 @@ $(() => {
             
         </div>
         `;
-        return str;
 
+        const el = $(str)[0]; //get all the div
+        return el;
     }
+
+
+
+
+    $(".getInfo", el).click(function(e) {
+        let obj1 = e.currentTarget
+        $.grep(MoreInfoArray, function(obj) {
+            if (obj.id === obj1.id) {
+                displayMoreInfo(obj1);
+            }
+            return;
+        })[0];
+        // for (const obj of MoreInfoArray) {
+        //     for(obj.id in MoreInfoArray){
+        //     displayMoreInfo(obj);
+        //     return;
+        // }
+
+        getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj1.id)}`, response => displayMoreInfo(response));
+
+    });
+    return el
+
+
+
+
 
     //search a coin
     $("#searchCoins").click(() => {
@@ -96,30 +123,30 @@ $(() => {
     function displaySearchCoin(Coin) {
         $("#allCoins").empty();
         $(`#allCoins`).addClass("loader");
-        let str = drawOneCoin(Coin);
+        let el = drawOneCoin(Coin);
         $(`#allCoins`).removeClass("loader");
-        $("#allCoins").append(str);
+        $("#allCoins").append(el);
     }
 
 
-    $("div").click(function(e) {
-        let obj1 = e.target.closest(".getInfo");
-        $.grep(MoreInfoArray, function(obj) {
-            if (obj.id === obj1.id) {
+    // $("div").click(function(e) {
+    //     let obj1 = e.target.closest(".getInfo");
+    //     $.grep(MoreInfoArray, function(obj) {
+    //         if (obj.id === obj1.id) {
 
-                displayMoreInfo(obj1);
-            }
-            return;
-        })[0];
-        // for (const obj of MoreInfoArray) {
-        //     for(obj.id in MoreInfoArray){
-        //     displayMoreInfo(obj);
-        //     return;
-        // }
+    //             displayMoreInfo(obj1);
+    //         }
+    //         return;
+    //     })[0];
+    //     // for (const obj of MoreInfoArray) {
+    //     //     for(obj.id in MoreInfoArray){
+    //     //     displayMoreInfo(obj);
+    //     //     return;
+    //     // }
 
-        getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj1.id)}`, response => displayMoreInfo(response));
+    //     getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj1.id)}`, response => displayMoreInfo(response));
 
-    });
+    // });
 
 
     //get More Info for coin - and then store it for 2 min for local usage
