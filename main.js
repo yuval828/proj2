@@ -9,7 +9,7 @@ $(() => {
 
 
 
-    // $("div").click(() => {
+    // $(".getInfo").click(() => {
     //     getAjaxData(`https://api.coingecko.com/api/v3/coins/${allCoinsArray.id}`, response => displayMoreInfo(response));
     // });
 
