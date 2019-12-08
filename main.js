@@ -4,7 +4,7 @@
 $(() => {
     let allCoinsArray = [];
     let MoreInfoArray = [];
-    getAjaxData("https://api.coingecko.com/api/v3/coins/list", response => displayCoins(response));
+    getAjaxData("https://api.coingecko.com/api/v3/coins/list", response => displayAllCoins(response));
 
 
 
@@ -25,14 +25,16 @@ $(() => {
 
 
 
-    function displayCoins(Coins) { //run on the array for how many coins we want to draw
+    function displayAllCoins(Coins) { //run on the array for how many coins we want to draw
         $("#allCoins").empty();
+        $(`#allCoins`).addClass("loader");
         allCoinsArray = Coins.slice(0, 10); //slice the array for how much coins we want to see
         let i = 0;
         for (const item of Coins) { //can run on allCoinsArray and dont need if and index
             i++;
             if (i <= 10) {
-                let str = drawCoin(item);
+                let str = drawOneCoin(item);
+                $(`#allCoins`).removeClass("loader");
                 $("#allCoins").append(str);
                 // var coinsArr = arr.push(item); 
             } //else return coinsArr;
@@ -40,7 +42,7 @@ $(() => {
     }
 
 
-    function drawCoin(item) { //a single coin draw
+    function drawOneCoin(item) { //a single coin draw
         const str = `
         <div class="coinDiv col-xl-4 col-lg-4 col-md-4 col-sm-12 " >
             <div class="card-body row">
@@ -76,13 +78,13 @@ $(() => {
         }
         $.grep(allCoinsArray, function(obj) {
             if (obj.symbol === searchCoin) {
-                displayCoin(obj);
+                displaySearchCoin(obj);
             }
             return;
         })[0];
         $.grep(allCoinsArray, function(obj) {
             if (obj.name === searchCoin) {
-                displayCoin(obj);
+                displaySearchCoin(obj);
             }
             return;
         })[0];
@@ -91,9 +93,11 @@ $(() => {
     });
 
 
-    function displayCoin(Coin) {
-        let str = drawCoin(Coin);
+    function displaySearchCoin(Coin) {
         $("#allCoins").empty();
+        $(`#allCoins`).addClass("loader");
+        let str = drawOneCoin(Coin);
+        $(`#allCoins`).removeClass("loader");
         $("#allCoins").append(str);
     }
 
@@ -102,6 +106,7 @@ $(() => {
         let obj1 = e.target.closest(".getInfo");
         $.grep(MoreInfoArray, function(obj) {
             if (obj.id === obj1.id) {
+
                 displayMoreInfo(obj1);
             }
             return;
@@ -112,7 +117,7 @@ $(() => {
         //     return;
         // }
 
-        getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj.id)}`, response => displayMoreInfo(response));
+        getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj1.id)}`, response => displayMoreInfo(response));
 
     });
 
@@ -123,6 +128,7 @@ $(() => {
         MoreInfoArray.push(obj);
         // }, 20000);
         $(`#collapse${obj.id}`).empty(); // לדיב אם רוצים כרקע style="background-image: url(${obj.image.large}); background-repeat: no-repeat";
+        $(`#collapse${obj.id}`).addClass("loader");
         const str = `
             <div class="card-body">
                 <h5><u>Current Price:</u></h5>
@@ -133,7 +139,7 @@ $(() => {
                   <img class="imgCountry" src="${obj.image.large}" >
                 </span>                  
             </div>`;
-
+        $(`#collapse${obj.id}`).removeClass("loader");
         $(`#collapse${obj.id}`).append(str);
     }
 
