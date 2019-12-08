@@ -67,33 +67,28 @@ $(() => {
         `;
 
         const el = $(str)[0]; //get all the div
-        return el;
+
+        $(".getInfo", el).click(function(e) {
+            let obj1 = e.currentTarget
+            $.grep(MoreInfoArray, function(obj) {
+                if (obj.id === obj1.id) {
+                    displayMoreInfo(obj1);
+                }
+                return;
+            })[0];
+            // for (const obj of MoreInfoArray) {
+            //     for(obj.id in MoreInfoArray){
+            //     displayMoreInfo(obj);
+            //     return;
+            // }
+
+            getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj1.id)}`, response => displayMoreInfo(response));
+
+        });
+        return el
+
+
     }
-
-
-
-
-    $(".getInfo", el).click(function(e) {
-        let obj1 = e.currentTarget
-        $.grep(MoreInfoArray, function(obj) {
-            if (obj.id === obj1.id) {
-                displayMoreInfo(obj1);
-            }
-            return;
-        })[0];
-        // for (const obj of MoreInfoArray) {
-        //     for(obj.id in MoreInfoArray){
-        //     displayMoreInfo(obj);
-        //     return;
-        // }
-
-        getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj1.id)}`, response => displayMoreInfo(response));
-
-    });
-    return el
-
-
-
 
 
     //search a coin
