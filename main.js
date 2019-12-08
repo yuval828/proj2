@@ -69,13 +69,27 @@ $(() => {
         const el = $(str)[0]; //get all the div
 
         $(".getInfo", el).click(function(e) {
-            let obj1 = e.currentTarget
-            $.grep(MoreInfoArray, function(obj) {
-                if (obj.id === obj1.id) {
-                    displayMoreInfo(obj1);
-                }
-                return;
-            })[0];
+            let obj1 = e.currentTarget;
+
+
+            /* how to make the MoreInfoArray to last for 2 min(and at this time local reading of more info)
+             from the first entry no metter how much we press
+             so only one entry for a coin 
+             */
+
+
+            // setInterval(() => {
+            // $.grep(MoreInfoArray, function(obj) {
+            //     if (obj.id === obj1.id) {
+            //         displayMoreInfo(obj1);
+            //     }
+            //     return;
+            // })[0];
+            // }, 20000);
+
+
+
+
             // for (const obj of MoreInfoArray) {
             //     for(obj.id in MoreInfoArray){
             //     displayMoreInfo(obj);
@@ -86,10 +100,28 @@ $(() => {
 
         });
         return el
-
-
     }
 
+
+    //get More Info for coin - and then store it for 2 min for local usage
+    function displayMoreInfo(obj) {
+        MoreInfoArray.push(obj);
+        $(`#collapse${obj.id}`).empty(); // לדיב אם רוצים כרקע style="background-image: url(${obj.image.large}); background-repeat: no-repeat";
+        $(`#collapse${obj.id}`).addClass("loader");
+        const str = `          
+            </div>
+            <div class="card-body">
+                <h5><u>Current Price:</u></h5>
+                <p class="card-title">Dollar: ${obj.market_data.current_price.usd}&dollar;</p>
+                <p class="card-title">Euro: ${obj.market_data.current_price.eur}&euro;</p>
+                <p class="card-title">NIS: ${obj.market_data.current_price.ils}&#8362;</p>
+                <span>
+                  <img class="imgCountry" src="${obj.image.large}" >
+                </span>                  
+            </div>`;
+        $(`#collapse${obj.id}`).removeClass("loader");
+        $(`#collapse${obj.id}`).append(str);
+    }
 
     //search a coin
     $("#searchCoins").click(() => {
@@ -144,34 +176,7 @@ $(() => {
     // });
 
 
-    //get More Info for coin - and then store it for 2 min for local usage
-    function displayMoreInfo(obj) {
-        // setInterval(() => {
-        MoreInfoArray.push(obj);
-        // }, 20000);
-        $(`#collapse${obj.id}`).empty(); // לדיב אם רוצים כרקע style="background-image: url(${obj.image.large}); background-repeat: no-repeat";
-        $(`#collapse${obj.id}`).addClass("loader");
-        const str = `
-            <p>
-            <button class="btn btn-primary getInfo" id="${obj.id}" data-toggle="collapse" data-target="#collapse${obj.id}" aria-expanded="false" aria-controls="collapse">
-                Close Info
-            </button>
-            </p>
-            <div class="collapse" id="collapse${obj.id}">
-            
-            </div>
-            <div class="card-body">
-                <h5><u>Current Price:</u></h5>
-                <p class="card-title">Dollar: ${obj.market_data.current_price.usd}&dollar;</p>
-                <p class="card-title">Euro: ${obj.market_data.current_price.eur}&euro;</p>
-                <p class="card-title">NIS: ${obj.market_data.current_price.ils}&#8362;</p>
-                <span>
-                  <img class="imgCountry" src="${obj.image.large}" >
-                </span>                  
-            </div>`;
-        $(`#collapse${obj.id}`).removeClass("loader");
-        $(`#collapse${obj.id}`).append(str);
-    }
+
 
 
 });
