@@ -107,11 +107,6 @@ $(() => {
 
         const el = $(str)[0]; //get all the div
 
-        /* how to make the MoreInfoArray to last for 2 min(and at this time local reading of more info)
-                     from the first entry no metter how much we press
-                     so only one entry for a coin 
-                     */
-
         $(".getInfo", el).click(function(e) {
             let obj1 = e.currentTarget;
             if (obj1.attributes[4].value == "false") { //MoreInfo is closed!
@@ -131,9 +126,11 @@ $(() => {
                         if (obj.endTime > Date.parse(new Date)) {
                             displayMoreInfo(obj, Local);
                         } else {
-                            MoreInfoArray.splice(i, 1);
-                            Local = false;
-                            return;
+                            if (MoreInfoArray[i].market_cap_rank === Number(obj.market_cap_rank)) {
+                                MoreInfoArray.splice(i, 1);
+                                Local = false;
+                                return;
+                            }
                         }
                     }
                     ++i;
@@ -174,7 +171,7 @@ $(() => {
     //get More Info for coin - and then store it for 2 min for local usage
     function displayMoreInfo(obj, Local) {
         if (!Local) {
-            obj.endTime = Date.parse(new Date) + 20000;
+            obj.endTime = Date.parse(new Date) + 120000;
             MoreInfoArray.push(obj);
         }
 
