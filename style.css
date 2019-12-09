@@ -1,15 +1,29 @@
-/* header {
-    text-align: center;
-    height: 100%;
-} */
-
 img {
     width: 200px;
     height: 200px;
 }
 
+#allCoins {
+    background: none;
+}
+
 .coinDiv {
-    border: 1px solid gray;
+    border-radius: 25px;
+    border: 1px solid #73AD21;
+    margin-top: 3px;
+    box-shadow: 4px 4px 6px chocolate;
+}
+
+.coinDiv:nth-child(odd) {
+    background-color: lightgoldenrodyellow;
+}
+
+.coinDiv:nth-child(even) {
+    background-color: lightcyan;
+}
+
+.coinDiv:hover {
+    background-color: lightskyblue;
 }
 
 .row {
@@ -32,55 +46,6 @@ input {
     font-size: large;
     text-align: center;
 }
-
-
-/* p,
-h5 {
-    text-shadow: 1px 1px 1px #FF0000;
-    font-weight: bolder;
-    color: black;
-} */
-
-
-/* .coins:nth-child(even) { */
-
-
-/* .coins:nth-child(odd) {
-    border: 2px solid black;
-    background-color: cadetblue;
-    width: 230px;
-    height: 140px;
-    float: left;
-    text-align: left;
-    margin: 9px;
-    padding-left: 3px;
-    box-shadow: 4px 4px 6px chocolate;
-    border-radius: 25px;
-    background-position: left top;
-    background-repeat: repeat;
-    padding: 20px;
-}*/
-
-
-/* button {
-    background-color: white;
-    color: black;
-    border: 2px solid #4CAF50;
-    padding: 16px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    margin-left: 3px;
-    -webkit-transition-duration: 0.4s;
-    /* Safari */
-
-
-/* transition-duration: 0.4s;
-cursor: pointer;
-
-} */
 
 button:hover {
     background-color: #4CAF50;
@@ -209,121 +174,31 @@ input:checked+.slider:before {
 }
 
 
-/* 
-parallax
+/* spinner for button */
 
-.parallax {
-    /* The image used
-    background-image: url('techanalysis-alts4-500x300.jpg');
-    /* Full height 
-    height: 100%;
-    /* Create the parallax scrolling effect 
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-} 
-
- .parallax1 {
-    The image used
-    background-image: url('socool.jpeg');
-    Full height
-    height: 50%;
-    Create the parallax scrolling effect
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-} */
-
-
-/* spinner */
-
-
-/* .loader {
-    color: #ffffff;
-    font-size: 90px;
-    text-indent: -9999em;
-    overflow: hidden;
-    width: 1em;
-    height: 1em;
-    border-radius: 50%;
-    margin: 72px auto;
-    position: relative;
-    -webkit-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-animation: load6 1.7s infinite ease, round 1.7s infinite ease;
-    animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+.spinner {
+    display: inline-block;
+    opacity: 0;
+    max-width: 0;
+    -webkit-transition: opacity 0.25s, max-width 0.45s;
+    -moz-transition: opacity 0.25s, max-width 0.45s;
+    -o-transition: opacity 0.25s, max-width 0.45s;
+    transition: opacity 0.25s, max-width 0.45s;
+    /* Duration fixed since we animate additional hidden width */
 }
 
-@-webkit-keyframes load6 {
-    0% {
-        box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
-    }
-    5%,
-    95% {
-        box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
-    }
-    10%,
-    59% {
-        box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
-    }
-    20% {
-        box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
-    }
-    38% {
-        box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
-    }
-    100% {
-        box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
-    }
+.has-spinner.active {
+    cursor: progress;
 }
 
-@keyframes load6 {
-    0% {
-        box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
-    }
-    5%,
-    95% {
-        box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
-    }
-    10%,
-    59% {
-        box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
-    }
-    20% {
-        box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
-    }
-    38% {
-        box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
-    }
-    100% {
-        box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
-    }
+.has-spinner.active .spinner {
+    opacity: 1;
+    max-width: 50px;
+    /* More than it will ever come, notice that this affects on animation duration */
 }
 
-@-webkit-keyframes round {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
 
-@keyframes round {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-} */
+/* spinner for div */
 
 .loader {
     border: 16px solid #f3f3f3;

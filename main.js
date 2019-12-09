@@ -6,14 +6,6 @@ $(() => {
     let MoreInfoArray = [];
     getAjaxData("https://api.coingecko.com/api/v3/coins/list", response => displayAllCoins(response));
 
-
-
-
-    // $(".getInfo").click(() => {
-    //     getAjaxData(`https://api.coingecko.com/api/v3/coins/${allCoinsArray.id}`, response => displayMoreInfo(response));
-    // });
-
-
     function getAjaxData(url, callback) {
         $.ajax({
             method: "GET",
@@ -28,11 +20,11 @@ $(() => {
     function displayAllCoins(Coins) { //run on the array for how many coins we want to draw
         $("#allCoins").empty();
         $(`#allCoins`).addClass("loader");
-        allCoinsArray = Coins.slice(0, 10); //slice the array for how much coins we want to see
+        allCoinsArray = Coins.slice(0, 12); //slice the array for how much coins we want to see
         let i = 0;
         for (const item of Coins) { //can run on allCoinsArray and dont need if and index
             i++;
-            if (i <= 10) {
+            if (i <= 12) {
                 let el = drawOneCoin(item);
                 $(`#allCoins`).removeClass("loader");
                 $("#allCoins").append(el);
@@ -55,10 +47,10 @@ $(() => {
             <hr>
                 <p class="card-text">${item.name}</p>
                 <p>
-                    <button class="btn btn-primary getInfo" id="${item.id}" data-toggle="collapse" data-target="#collapse${item.id}" aria-expanded="false" aria-controls="collapse">
+                <button class="btn btn-primary getInfo has-spinner " id="${item.id}" data-toggle="collapse" data-target="#collapse${item.id}" aria-expanded="false" aria-controls="collapse">
+                <span class="spinner"><i class="fa fa-refresh fa-spin"></i></span>
                         More Info
                     </button>
-                </p>
                 <div class="collapse" id="collapse${item.id}">
                    
                 </div>
@@ -70,7 +62,9 @@ $(() => {
 
         $(".getInfo", el).click(function(e) {
             let obj1 = e.currentTarget;
+            // $(`#${this.id}`).toggleClass('active');
 
+            // $(`#${this.id}`).toggleClass('active');
 
             /* how to make the MoreInfoArray to last for 2 min(and at this time local reading of more info)
              from the first entry no metter how much we press
@@ -102,6 +96,19 @@ $(() => {
         return el
     }
 
+
+    // to activate spiner on button
+    // $(function() {
+    //     $('.getInfo').click(function() {
+    //         $(this).toggleClass('active');
+    //         setTimeout(() => {
+    //             alert("HI")
+    //             $(this).toggleClass('active');
+    //         }, 2000);
+
+
+    //     });
+    // });
 
     //get More Info for coin - and then store it for 2 min for local usage
     function displayMoreInfo(obj) {
