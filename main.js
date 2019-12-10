@@ -18,6 +18,8 @@ $(() => {
 
     $("#LiveReports").click(() => {
         $("#allCoins").empty();
+        $(`#headerSpinner`).addClass("loader");
+        $(`#headerSpinner`).removeClass("loader");
         $("#firstParalex").text(`
         come see the graph....
         `);
@@ -31,6 +33,8 @@ $(() => {
 
     $("#About").click(() => {
         $("#allCoins").empty();
+        $(`#headerSpinner`).addClass("loader");
+        $(`#headerSpinner`).removeClass("loader");
         // $(".bgimg-2").attr("background-image", "images.jpg");
         //style="background-image: url(images.jpg); background-repeat: no-repeat"
         $("#firstParalex").text(`
@@ -57,22 +61,22 @@ $(() => {
 
     function displayAllCoins(Coins) { //run on the array for how many coins we want to draw
         $("#allCoins").empty();
-        $(`#spinner`).addClass("loader");
-        allCoinsArray = Coins.slice(0, 12); //slice the array for how much coins we want to see
+        $(`#headerSpinner`).addClass("loader");
+        allCoinsArray = Coins.slice(0, 10); //slice the array for how much coins we want to see
         let i = 0;
         for (const item of Coins) { //can run on allCoinsArray and dont need if and index
             i++;
-            if (i <= 12) {
+            if (i <= 10) {
                 let el = drawOneCoin(item);
-                $(`#spinner`).removeClass("loader");
+                $(`#headerSpinner`).removeClass("loader");
                 $("#allCoins").append(el);
-                // var coinsArr = arr.push(item); 
-            } //else return coinsArr;
+            }
         }
     }
 
 
-    /** new simple switch????
+    /** new simple bootstrap switch???? to change?
+     * 
      * <!-- Default switch -->
     <div class="custom-control custom-switch">
       <input type="checkbox" class="custom-control-input" id="customSwitches">
@@ -94,8 +98,8 @@ $(() => {
             <hr>
                 <p class="card-text">${item.name}</p>
                 <p>
-                <button class="btn btn-primary getInfo has-spinner " id="${item.id}" data-toggle="collapse" data-target="#collapse${item.id}" aria-expanded="false" aria-controls="collapse">
-                <span class="spinner"><i class="fa fa-refresh fa-spin"></i></span>
+                <button class="btn btn-primary getInfo " id="${item.id}" data-toggle="collapse" data-target="#collapse${item.id}" aria-expanded="false" aria-controls="collapse">
+                <span id="showSpinner${item.id}"></span>
                         More Info
                     </button>
                 <div class="collapse" id="collapse${item.id}">
@@ -108,27 +112,25 @@ $(() => {
         const el = $(str)[0]; //get all the div
 
         $(".getInfo", el).click(function(e) {
+            /* spinner for button */
+
+
+
             let obj1 = e.currentTarget;
             if (obj1.attributes[4].value == "false") { //MoreInfo is closed!
+                $(`#showSpinner${item.id}`).addClass('spinner-border spinner-border-sm');
+                let islocal = false;
 
-                /* spinner for button */
-                // $(`#${this.id}`).toggleClass('active');
-                // $(`#${this.id}`).toggleClass('active');
-
-                let Local = false;
-
-                // setInterval(() => {
                 let i = 0;
                 $.grep(MoreInfoArray, function(obj) {
-
                     if (obj.id === obj1.id) {
-                        Local = true;
+                        islocal = true;
                         if (obj.endTime > Date.parse(new Date)) {
-                            displayMoreInfo(obj, Local);
+                            displayMoreInfo(obj, islocal);
                         } else {
                             if (MoreInfoArray[i].market_cap_rank === Number(obj.market_cap_rank)) {
                                 MoreInfoArray.splice(i, 1);
-                                Local = false;
+                                islocal = false;
                                 return;
                             }
                         }
@@ -136,48 +138,26 @@ $(() => {
                     ++i;
                     return;
                 })[0];
-                // }, 20000);
 
 
 
-                if (!Local) {
-                    // for (const obj of MoreInfoArray) {
-                    //     for(obj.id in MoreInfoArray){
-                    //     displayMoreInfo(obj);
-                    //     return;
-                    // }
-
-                    getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj1.id)}`, response => displayMoreInfo(response, Local));
+                if (!islocal) {
+                    getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj1.id)}`, response => displayMoreInfo(response, islocal));
                 }
             }
         });
         return el
     }
 
-
-    // spinner for button+to activate spiner on button
-    // $(function() {
-    //     $('.getInfo').click(function() {
-    //         $(this).toggleClass('active');
-    //         setTimeout(() => {
-    //             alert("HI")
-    //             $(this).toggleClass('active');
-    //         }, 2000);
-
-
-    //     });
-    // });
-
-    //get More Info for coin - and then store it for 2 min for local usage
-    function displayMoreInfo(obj, Local) {
-        if (!Local) {
+    /*get More Info for coin - and then store it for 2 min for islocal usage*/
+    function displayMoreInfo(obj, islocal) {
+        if (!islocal) {
             obj.endTime = Date.parse(new Date) + 120000;
             MoreInfoArray.push(obj);
         }
 
-
         $(`#collapse${obj.id}`).empty(); // לדיב אם רוצים כרקע style="background-image: url(${obj.image.large}); background-repeat: no-repeat";
-        $(`#collapse${obj.id}`).addClass("loader");
+        // $(`#collapse${obj.id}`).addClass("loader");
         const str = `          
             </div>
             <div class="card-body">
@@ -189,40 +169,51 @@ $(() => {
                   <img class="imgCountry" src="${obj.image.large}" >
                 </span>                  
             </div>`;
-        $(`#collapse${obj.id}`).removeClass("loader");
+        // $(`#collapse${obj.id}`).removeClass("loader");
+        $(`#showSpinner${obj.id}`).removeClass('spinner-border spinner-border-sm');
         $(`#collapse${obj.id}`).append(str);
     }
 
 
     //search a coin
     $("#searchCoins").click(() => {
+        $(`#headerSpinner`).addClass("loader");
         let searchCoin = $("input").val();
+        let coinAtList = false;
         if (searchCoin == "") {
+            $(`#headerSpinner`).removeClass("loader");
             alert("please enter a Symbol name: like BTC or Name: like bitcoin");
             return;
         }
         $.grep(allCoinsArray, function(obj) {
             if (obj.symbol === searchCoin) {
                 displaySearchCoin(obj);
+                $("#firstParalex").text("Got your Coin symbol scroll down");
+                coinAtList = true;
+                return;
             }
-            return;
         })[0];
         $.grep(allCoinsArray, function(obj) {
             if (obj.name === searchCoin) {
                 displaySearchCoin(obj);
+                $("#firstParalex").text("Got your Coin name scroll down");
+                coinAtList = true;
+                return;
             }
-            return;
         })[0];
-        // alert(`you didnt enter a correct coin please enter a Symbol name: like BTC or Name: like bitcoin`);
-
+        if (!coinAtList) {
+            $(`#headerSpinner`).removeClass("loader");
+            alert(`you didnt enter a correct coin please enter a Symbol name: like BTC or Name: like bitcoin`);
+        }
     });
 
 
     function displaySearchCoin(Coin) {
         $("#allCoins").empty();
-        $(`#spinner`).addClass("loader");
+        // $(`#spinner`).addClass("loader");
         let el = drawOneCoin(Coin);
-        $(`#spinner`).removeClass("loader");
+        $(`#headerSpinner`).removeClass("loader");
+        // $(`#spinner`).removeClass("loader");
         $("#allCoins").append(el);
     }
 

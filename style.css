@@ -105,6 +105,9 @@ header {
 }
 
 
+/* parallax end */
+
+
 /*switch*/
 
 .switch {
@@ -170,9 +173,13 @@ input:checked+.slider:before {
 }
 
 
+/*switch end*/
+
+
 /* spinner for button */
 
-.spinner {
+
+/* .spinner {
     display: inline-block;
     opacity: 0;
     max-width: 0;
@@ -180,7 +187,7 @@ input:checked+.slider:before {
     -moz-transition: opacity 0.25s, max-width 0.45s;
     -o-transition: opacity 0.25s, max-width 0.45s;
     transition: opacity 0.25s, max-width 0.45s;
-    /* Duration fixed since we animate additional hidden width */
+    Duration fixed since we animate additional hidden width  
 }
 
 .has-spinner.active {
@@ -190,8 +197,11 @@ input:checked+.slider:before {
 .has-spinner.active .spinner {
     opacity: 1;
     max-width: 50px;
-    /* More than it will ever come, notice that this affects on animation duration */
-}
+     More than it will ever come, notice that this affects on animation duration
+} */
+
+
+/* spinner for button end*/
 
 
 /* spinner for div */
@@ -226,3 +236,6 @@ input:checked+.slider:before {
         transform: rotate(360deg);
     }
 }
+
+
+/* spinner for div end*/
