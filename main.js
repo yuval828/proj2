@@ -68,9 +68,9 @@ $(() => {
     /* a single coin draw*/
     function drawOneCoin(item) {
         const str = `
-        <div class="coinDiv col-xl-4 col-lg-4 col-md-4 col-sm-12 " >
+        <div class="coinDiv col-xl-3 col-lg-3 col-md-4 col-sm-12 " >
             <div class="card-body row">
-                <h5 class="card-title col-xl-9 col-lg-9 col-md-8 col-sm-10 col-9">${item.symbol}</h5>
+                <h5 class="card-title col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">${item.symbol}</h5>
                 <label class="switch">
                     <input type="checkbox">
                     <span class="slider round"></span>
@@ -142,9 +142,9 @@ $(() => {
             </div>
             <div class="card-body">
                 <h5><u>Current Price:</u></h5>
-                <p class="card-title">Dollar: ${obj.market_data.current_price.usd}&dollar;</p>
-                <p class="card-title">Euro: ${obj.market_data.current_price.eur}&euro;</p>
-                <p class="card-title">NIS: ${obj.market_data.current_price.ils}&#8362;</p>
+                <p class="card-info">Dollar: ${obj.market_data.current_price.usd}&dollar;</p>
+                <p class="card-info">Euro: ${obj.market_data.current_price.eur}&euro;</p>
+                <p class="card-info">NIS: ${obj.market_data.current_price.ils}&#8362;</p>
                 <span>
                   <img class="imgCountry" src="${obj.image.large}" >
                 </span>                  
@@ -238,7 +238,7 @@ $(() => {
         // <div id="chartContainer" style="height: 370px; width: 100%;"></div>
         // <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
         // <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>`)
-        // getAjaxData("https://api.coingecko.com/api/v3/coins/list", response => displayAllCoins(response));
+        // getAjaxData("https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,BTC&tsyms=USD", response => displayAllCoins(response));
     });
 
     // var options = {

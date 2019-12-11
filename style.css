@@ -1,5 +1,9 @@
 /* the nev will stay on screen */
 
+.my-2 {
+    font-size: 1.3rem;
+}
+
 .sticky {
     position: sticky;
     top: 0;
@@ -9,15 +13,26 @@
 }
 
 img {
-    width: 200px;
-    height: 200px;
+    width: 160px;
+    height: 160px;
+    margin-left: -5px;
+}
+
+.card-title {
+    margin-left: -31px;
+    font-size: 1.5rem;
+}
+
+.card-text {
+    font-size: 1.5rem;
 }
 
 .coinDiv {
     border-radius: 25px;
     border: 1px solid #73AD21;
-    margin-bottom: 15px;
+    margin: 10px;
     box-shadow: 2px 2px 2px chocolate;
+    max-width: 230px;
 }
 
 .coinDiv:nth-child(odd) {
@@ -108,13 +123,14 @@ header {
     color: #000;
 }
 
-.caption span.border {
-    background-color: lightslategray;
-    color: #fff;
+.caption>span {
+    /* background-color: lightslategray;
     padding: 10px;
-    font-size: 30px;
-    /* letter-spacing: 5px; */
-    border-radius: 25px;
+    letter-spacing: 5px;
+    border-radius: 25px; */
+    color: #fff;
+    font-size: 53px;
+    text-shadow: 4px 4px 4px rgb(247, 22, 22);
 }
 
 
