@@ -1,52 +1,32 @@
 /// <reference path="jquery-3.4.1.js" />
 "use strict";
 
+
+// from about/graph - search - bring to home 
 $(() => {
     let allCoinsArray = [];
     let MoreInfoArray = [];
 
-
+    //get all coins at load
     getAjaxData("https://api.coingecko.com/api/v3/coins/list", response => displayAllCoins(response));
 
 
-
+    //get all coins at home press
     $("#Home").click(() => {
-        $("#allCoins").empty();
-        $("#firstParalex").text("Coins R` us...");
+        HomePageDisplay();
         getAjaxData("https://api.coingecko.com/api/v3/coins/list", response => displayAllCoins(response));
     });
 
-    $("#LiveReports").click(() => {
+    function HomePageDisplay() {
         $("#allCoins").empty();
         $(`#headerSpinner`).addClass("loader");
+        $(".bgimg-1").css({ "background-image": `url("img/homeHeader.jpg")`, "min-height": "50%" });
+        $("#firstParalex").text("Wellcome to Coins R` us");
+        $(".bgimg-2").css({ "background-image": `url("img/homeHeader.jpg")`, "min-height": "50%" });
+        $("#secondParalex").text("scroll to see coins");
         $(`#headerSpinner`).removeClass("loader");
-        $("#firstParalex").text(`
-        come see the graph....
-        `);
-        // $("#allCoins").empty();
-        // $("#allCoins").html(`
-        // <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-        // <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-        // <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>`)
-        // getAjaxData("https://api.coingecko.com/api/v3/coins/list", response => displayAllCoins(response));
-    });
+    }
 
-    $("#About").click(() => {
-        $("#allCoins").empty();
-        $(`#headerSpinner`).addClass("loader");
-        $(`#headerSpinner`).removeClass("loader");
-        // $(".bgimg-2").attr("background-image", "images.jpg");
-        //style="background-image: url(images.jpg); background-repeat: no-repeat"
-        $("#firstParalex").text(`
-        welcome to my site....
-        `);
-
-        $("#allCoins").html(
-            ` <div>
-                about me...
-                </div>`
-        );
-    });
 
     function getAjaxData(url, callback) {
         $.ajax({
@@ -58,22 +38,22 @@ $(() => {
     }
 
 
-
+    /** display all coins */
     function displayAllCoins(Coins) { //run on the array for how many coins we want to draw
         $("#allCoins").empty();
         $(`#headerSpinner`).addClass("loader");
-        allCoinsArray = Coins.slice(0, 10); //slice the array for how much coins we want to see
+        allCoinsArray = Coins.slice(0, 12); //slice the array for how much coins we want to see
         let i = 0;
         for (const item of Coins) { //can run on allCoinsArray and dont need if and index
             i++;
-            if (i <= 10) {
+            if (i <= 12) {
                 let el = drawOneCoin(item);
-                $(`#headerSpinner`).removeClass("loader");
                 $("#allCoins").append(el);
+                $(`#headerSpinner`).removeClass("loader");
             }
         }
     }
-
+    /** display all coins end */
 
     /** new simple bootstrap switch???? to change?
      * 
@@ -85,11 +65,12 @@ $(() => {
      */
 
 
-    function drawOneCoin(item) { //a single coin draw
+    /* a single coin draw*/
+    function drawOneCoin(item) {
         const str = `
         <div class="coinDiv col-xl-4 col-lg-4 col-md-4 col-sm-12 " >
             <div class="card-body row">
-                <h5 class="card-title col-xl-8 col-lg-8 col-md-8 col-sm-8 col-7">${item.symbol}</h5>
+                <h5 class="card-title col-xl-9 col-lg-9 col-md-8 col-sm-10 col-9">${item.symbol}</h5>
                 <label class="switch">
                     <input type="checkbox">
                     <span class="slider round"></span>
@@ -111,10 +92,9 @@ $(() => {
 
         const el = $(str)[0]; //get all the div
 
+
+        /*chack if more info pressed */
         $(".getInfo", el).click(function(e) {
-            /* spinner for button */
-
-
 
             let obj1 = e.currentTarget;
             if (obj1.attributes[4].value == "false") { //MoreInfo is closed!
@@ -170,15 +150,35 @@ $(() => {
                 </span>                  
             </div>`;
         // $(`#collapse${obj.id}`).removeClass("loader");
-        $(`#showSpinner${obj.id}`).removeClass('spinner-border spinner-border-sm');
         $(`#collapse${obj.id}`).append(str);
+        $(`#showSpinner${obj.id}`).removeClass('spinner-border spinner-border-sm');
     }
+    /*get More Info end*/
 
 
-    //search a coin
+    /*search a coin*/
+    //search if enter pressed 
+    $("input").keypress(event => {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            $("#searchCoins").click();
+        }
+    });
+
+    //search if search button pressed 
     $("#searchCoins").click(() => {
+
+
+        // if (notathomepage) {
+        //     גישה לHOME
+        // } else {}
+
+
+
         $(`#headerSpinner`).addClass("loader");
         let searchCoin = $("input").val();
+
+        searchCoin = searchCoin.toLowerCase();
         let coinAtList = false;
         if (searchCoin == "") {
             $(`#headerSpinner`).removeClass("loader");
@@ -188,7 +188,7 @@ $(() => {
         $.grep(allCoinsArray, function(obj) {
             if (obj.symbol === searchCoin) {
                 displaySearchCoin(obj);
-                $("#firstParalex").text("Got your Coin symbol scroll down");
+                $("#firstParalex").text("Found your Coin symbol, scroll down");
                 coinAtList = true;
                 return;
             }
@@ -196,7 +196,7 @@ $(() => {
         $.grep(allCoinsArray, function(obj) {
             if (obj.name === searchCoin) {
                 displaySearchCoin(obj);
-                $("#firstParalex").text("Got your Coin name scroll down");
+                $("#firstParalex").text("Found your Coin name, scroll down");
                 coinAtList = true;
                 return;
             }
@@ -209,6 +209,7 @@ $(() => {
 
 
     function displaySearchCoin(Coin) {
+        HomePageDisplay();
         $("#allCoins").empty();
         // $(`#spinner`).addClass("loader");
         let el = drawOneCoin(Coin);
@@ -216,31 +217,29 @@ $(() => {
         // $(`#spinner`).removeClass("loader");
         $("#allCoins").append(el);
     }
+    /*search a coin end*/
 
 
-    // $("div").click(function(e) {
-    //     let obj1 = e.target.closest(".getInfo");
-    //     $.grep(MoreInfoArray, function(obj) {
-    //         if (obj.id === obj1.id) {
+    /*LiveReports graph*/
+    $("#LiveReports").click(() => {
+        $("#allCoins").empty();
+        $(`#headerSpinner`).addClass("loader");
+        $(".bgimg-1").css({ "background-image": `url("img/LiveReports.jpg")`, "min-height": "50%" });
+        $("#firstParalex").text(`
+        come see the graph....
+        `);
+        $(".bgimg-2").css({ "background-image": `url("img/LiveReports.jpg")`, "min-height": "50%" });
+        $("#secondParalex").text(`
+        your graph....
+        `);
+        $(`#headerSpinner`).removeClass("loader");
 
-    //             displayMoreInfo(obj1);
-    //         }
-    //         return;
-    //     })[0];
-    //     // for (const obj of MoreInfoArray) {
-    //     //     for(obj.id in MoreInfoArray){
-    //     //     displayMoreInfo(obj);
-    //     //     return;
-    //     // }
-
-    //     getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj1.id)}`, response => displayMoreInfo(response));
-
-    // });
-
-
-
-    // //LiveReports graph
-
+        // $("#allCoins").html(`
+        // <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        // <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+        // <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>`)
+        // getAjaxData("https://api.coingecko.com/api/v3/coins/list", response => displayAllCoins(response));
+    });
 
     // var options = {
     //     exportEnabled: true,
@@ -334,6 +333,22 @@ $(() => {
     // }
 
 
+
+    //go to about if about press
+    $("#About").click(() => {
+        $("#allCoins").empty();
+        $(`#headerSpinner`).addClass("loader");
+        $(".bgimg-1").css({ "background-image": `url("img/aboutBobi.jpg")`, "min-height": "100%" });
+        $("#firstParalex").text(`welcome to my site yuval isaac....`);
+        $(".bgimg-2").css({ "background-image": `url("img/aboutLibi.jpg")`, "min-height": "100%" });
+        $("#secondParalex").text(`מה נעשה בפרוייקט...`);
+        $(`#headerSpinner`).removeClass("loader");
+        // $("#allCoins").html(
+        //     ` <div>
+        //         about me...
+        //         </div>`
+        // );
+    });
 
 
 });
