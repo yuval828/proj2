@@ -97,29 +97,36 @@ $(() => {
         $(".getInfo", el).click(function(e) {
 
             let obj1 = e.currentTarget;
-            if (obj1.attributes[4].value == "false") { //MoreInfo is closed!
+            if (obj1.attributes[4].value == "false") { //only if MoreInfo is closed!
                 $(`#showSpinner${item.id}`).addClass('spinner-border spinner-border-sm');
                 let islocal = false;
-
-                let i = 0;
+                let market_cap_rank = 0;
                 $.grep(MoreInfoArray, function(obj) {
-                    if (obj.id === obj1.id) {
-                        islocal = true;
-                        if (obj.endTime > Date.parse(new Date)) {
-                            displayMoreInfo(obj, islocal);
+                    if (obj.id === obj1.id) { //if obj is on the arr
+                        if (obj.endTime > Date.parse(new Date)) { //if now time is smaller then time in arr+2min
+                            islocal = true;
+                            displayMoreInfo(obj, islocal); //enter for local
+                            return;
                         } else {
-                            if (MoreInfoArray[i].market_cap_rank === Number(obj.market_cap_rank)) {
-                                MoreInfoArray.splice(i, 1);
-                                islocal = false;
-                                return;
-                            }
+                            islocal = "15";
+
+                            return (market_cap_rank = obj.market_cap_rank);
                         }
                     }
-                    ++i;
-                    return;
+
                 })[0];
 
 
+                if (islocal == "15") {
+                    for (let index = 0; index < MoreInfoArray.length; index++) {
+                        if (MoreInfoArray[index].market_cap_rank === Number(market_cap_rank)) {
+                            MoreInfoArray.splice(index, 1);
+
+                            getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj1.id)}`, response => displayMoreInfo(response, islocal));
+                            return;
+                        }
+                    }
+                }
 
                 if (!islocal) {
                     getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj1.id)}`, response => displayMoreInfo(response, islocal));
@@ -131,8 +138,8 @@ $(() => {
 
     /*get More Info for coin - and then store it for 2 min for islocal usage*/
     function displayMoreInfo(obj, islocal) {
-        if (!islocal) {
-            obj.endTime = Date.parse(new Date) + 120000;
+        if (islocal == false || islocal == "15") {
+            obj.endTime = Date.parse(new Date) + 20000;
             MoreInfoArray.push(obj);
         }
 
