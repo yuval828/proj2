@@ -21,9 +21,9 @@ $(() => {
         $("#allCoins").empty();
         $(`#headerSpinner`).addClass("loader");
         $(".bgimg-1").css({ "background-image": `url("img/homeHeader.jpg")`, "min-height": "50%" });
-        $("#firstParalex").text("Wellcome to Coins R` us");
+        $("#firstParalex").html("<b><u>crypTrack</b></u><br> the crypto database");
         $(".bgimg-2").css({ "background-image": `url("img/homeHeader.jpg")`, "min-height": "50%" });
-        $("#secondParalex").text("scroll to see coins");
+        $("#secondParalex").text("");
         $(`#headerSpinner`).removeClass("loader");
     }
 
@@ -42,11 +42,11 @@ $(() => {
     function displayAllCoins(Coins) { //run on the array for how many coins we want to draw
         $("#allCoins").empty();
         $(`#headerSpinner`).addClass("loader");
-        allCoinsArray = Coins.slice(0, 12); //slice the array for how much coins we want to see
+        allCoinsArray = Coins.slice(0, 500); //slice the array for how much coins we want to see
         let i = 0;
         for (const item of Coins) { //can run on allCoinsArray and dont need if and index
             i++;
-            if (i <= 12) {
+            if (i <= 500) {
                 let el = drawOneCoin(item);
                 $("#allCoins").append(el);
                 $(`#headerSpinner`).removeClass("loader");
@@ -69,7 +69,7 @@ $(() => {
     function drawOneCoin(item) {
         const str = `
         <div class="coinDiv col-xl-3 col-lg-3 col-md-4 col-sm-12 " >
-            <div class="card-body row">
+            <div class=" row">
                 <h5 class="card-title col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">${item.symbol}</h5>
                 <label class="switch">
                     <input type="checkbox">
@@ -131,6 +131,8 @@ $(() => {
                 if (!islocal) {
                     getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj1.id)}`, response => displayMoreInfo(response, islocal));
                 }
+            } else {
+                $(`#${obj1.id}`).text("More Info");
             }
         });
         return el
@@ -139,11 +141,12 @@ $(() => {
     /*get More Info for coin - and then store it for 2 min for islocal usage*/
     function displayMoreInfo(obj, islocal) {
         if (islocal == false || islocal == "15") {
-            obj.endTime = Date.parse(new Date) + 20000;
+            obj.endTime = Date.parse(new Date) + 120000;
             MoreInfoArray.push(obj);
         }
 
-        $(`#collapse${obj.id}`).empty(); // לדיב אם רוצים כרקע style="background-image: url(${obj.image.large}); background-repeat: no-repeat";
+        $(`#collapse${obj.id}`).empty()
+        $(`#${obj.id}`).text("Less info");; // לדיב אם רוצים כרקע style="background-image: url(${obj.image.large}); background-repeat: no-repeat";
         // $(`#collapse${obj.id}`).addClass("loader");
         const str = `          
             </div>
@@ -346,9 +349,13 @@ $(() => {
         $("#allCoins").empty();
         $(`#headerSpinner`).addClass("loader");
         $(".bgimg-1").css({ "background-image": `url("img/aboutBobi.jpg")`, "min-height": "100%" });
-        $("#firstParalex").text(`welcome to my site yuval isaac....`);
+        $("#firstParalex").html(`welcome to my site yuval isaac....<br>
+        infoinfo infoinfoinfo <br> infoinfo infoinfoinfo
+       `);
         $(".bgimg-2").css({ "background-image": `url("img/aboutLibi.jpg")`, "min-height": "100%" });
-        $("#secondParalex").text(`מה נעשה בפרוייקט...`);
+        $("#secondParalex").html(`מה נעשה בפרוייקט...<br>
+        infoinfo infoinfo infoinfo infoinfo <br>
+        infoinfo infoinfo <br> infoinfo infoinfo`);
         $(`#headerSpinner`).removeClass("loader");
         // $("#allCoins").html(
         //     ` <div>

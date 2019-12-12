@@ -2,6 +2,7 @@
 
 .my-2 {
     font-size: 1.3rem;
+    padding: .375rem;
 }
 
 .sticky {
@@ -12,10 +13,19 @@
     width: 100%;
 }
 
+.getInfo {
+    position: absolute;
+    top: 197px;
+}
+
 img {
     width: 160px;
     height: 160px;
     margin-left: -5px;
+}
+
+.collapse {
+    min-height: 420px;
 }
 
 .card-title {
@@ -27,12 +37,18 @@ img {
     font-size: 1.5rem;
 }
 
+.card-body {
+    position: absolute;
+    top: 233px;
+}
+
 .coinDiv {
     border-radius: 25px;
     border: 1px solid #73AD21;
-    margin: 10px;
+    margin: 7px;
     box-shadow: 2px 2px 2px chocolate;
-    max-width: 230px;
+    max-width: 229px;
+    min-height: 249px;
 }
 
 .coinDiv:nth-child(odd) {
@@ -49,6 +65,7 @@ img {
 
 .row {
     margin: 0%;
+    padding: 1.25rem;
 }
 
 .form-inline {
@@ -128,6 +145,7 @@ header {
     padding: 10px;
     letter-spacing: 5px;
     border-radius: 25px; */
+    line-height: normal;
     color: #fff;
     font-size: 53px;
     text-shadow: 4px 4px 4px rgb(247, 22, 22);
