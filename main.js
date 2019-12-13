@@ -175,15 +175,28 @@ $(() => {
         }
     });
 
+    // if x-clear is pressed go to Home! 
+    $("input").bind("mouseup", function(e) {
+        var $input = $(this),
+            oldValue = $input.val();
+
+        if (oldValue == "") return;
+
+        // When this event is fired after clicking on the clear button
+        // the value is not cleared yet. We have to wait for it.
+        setTimeout(function() {
+            var newValue = $input.val();
+
+            if (newValue == "") {
+                // capture the clear
+                $input.trigger("cleared");
+                $("#Home").click();
+            }
+        }, 1);
+    });
+
     //search if search button pressed 
     $("#searchCoins").click(() => {
-
-
-        // if (notathomepage) {
-        //     גישה לHOME
-        // } else {}
-
-
 
         $(`#headerSpinner`).addClass("loader");
         let searchCoin = $("input").val();
