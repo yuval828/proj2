@@ -219,7 +219,8 @@ $(() => {
         $.grep(allCoinsArray, function(obj) {
             if (obj.symbol === searchCoin) {
                 displaySearchCoin(obj);
-                $("#firstParalex").text("Found your Coin symbol, scroll down");
+                $("#firstParalex").text("Found your Coin symbol");
+                $("#secondParalex").text("scroll down");
                 coinAtList = true;
                 return;
             }
@@ -227,7 +228,8 @@ $(() => {
         $.grep(allCoinsArray, function(obj) {
             if (obj.name === searchCoin) {
                 displaySearchCoin(obj);
-                $("#firstParalex").text("Found your Coin name, scroll down");
+                $("#firstParalex").text("Found your Coin name");
+                $("#secondParalex").text("scroll down");
                 coinAtList = true;
                 return;
             }
