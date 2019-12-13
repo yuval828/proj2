@@ -18,7 +18,9 @@ $(() => {
         your graph....
         `);
         $(`#headerSpinner`).removeClass("loader");
-
+        $(`footer`).html(`
+        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        `);
         getAjaxData("https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,BTC&tsyms=USD", response => drawGraph(response));
     });
 

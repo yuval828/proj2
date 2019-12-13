@@ -18,8 +18,11 @@ $(() => {
     });
 
     function HomePageDisplay() {
-        $("#allCoins").empty();
-        $("#chartContainer").empty();
+        $(`footer`).html(`
+        <div id="allCoins" class="row bgimg-3"></div>
+        `);
+        // $("#allCoins").empty();
+        // $("#chartContainer").empty();
         $(`#headerSpinner`).addClass("loader");
         $(".bgimg-1").css({ "background-image": `url("img/homeHeader.jpg")`, "min-height": "50%" });
         $("#firstParalex").html("<b><u>crypTrack</b></u><br> the crypto database");
@@ -41,8 +44,11 @@ $(() => {
 
     /** display all coins */
     function displayAllCoins(Coins) { //run on the array for how many coins we want to draw
+        $(`footer`).html(`
+            <div id="allCoins" class="row bgimg-3"></div>
+            `);
         $("#allCoins").empty();
-        $("#chartContainer").empty();
+        // $("#chartContainer").empty();
         $(`#headerSpinner`).addClass("loader");
         allCoinsArray = Coins.slice(0, 500); //slice the array for how much coins we want to see
         let i = 0;
@@ -235,8 +241,12 @@ $(() => {
 
     function displaySearchCoin(Coin) {
         HomePageDisplay();
+        $(`footer`).html(`
+        <div id="allCoins" class="row bgimg-3"></div>
+        `);
         $("#allCoins").empty();
-        $("#chartContainer").empty();
+        // $("#chartContainer").empty().attr("height", "0");
+
         // $(`#spinner`).addClass("loader");
         let el = drawOneCoin(Coin);
         $(`#headerSpinner`).removeClass("loader");
