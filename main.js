@@ -103,32 +103,32 @@ $(() => {
         const el = $(str)[0]; //get all the div
 
         /*chack if switch pressed */
-        $(".switch", el).click(function(e) {
+        $(".switch", el).mouseup(function(e) {
             let obj = e.currentTarget;
             const nameSwitch = obj.offsetParent.firstChild.nextSibling.childNodes[1].innerText;
-            if (obj.firstElementChild.checked) { //אם מסומן תכנס
-                if (switchedArray.length == 0) { //אם מערך 0 תכניס את השם למערך
-                    switchedArray.push(nameSwitch);
-                    return;
-                } else { // אם מערך לא ריק 
-                    if (switchedArray.length < 5) {
-                        for (let index = 0; index < switchedArray.length; index++) { // כל עוד אינדקס פחות מאורך המערך
-                            if (switchedArray[index] === nameSwitch) { //בודק האם השם נמצא במערך אם כן מוחק אותו
-                                switchedArray.splice(index, 1);
-                                return;
-                            }
+            // if (!obj.firstElementChild.checked) { //אם מסומן תכנס
+            if (switchedArray.length == 0) { //אם מערך 0 תכניס את השם למערך
+                switchedArray.push(nameSwitch);
+                return;
+            } else { // אם מערך לא ריק 
+                if (switchedArray.length < 5) {
+                    for (let index = 0; index < switchedArray.length; index++) { // כל עוד אינדקס פחות מאורך המערך
+                        if (switchedArray[index] === nameSwitch) { //בודק האם השם נמצא במערך אם כן מוחק אותו
+                            switchedArray.splice(index, 1);
+                            return;
                         }
-                        switchedArray.push(nameSwitch);
-                    } else {
-                        Modal();
-
-
-
-
-
                     }
+                    switchedArray.push(nameSwitch);
+                } else {
+                    Modal();
+
+
+
+
+
                 }
             }
+            // }
         });
 
 
