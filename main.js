@@ -6,6 +6,8 @@
 $(() => {
     let allCoinsArray = [];
     let MoreInfoArray = [];
+    let switchedArray = [];
+
 
     //get all coins at load
     getAjaxData("https://api.coingecko.com/api/v3/coins/list", response => displayAllCoins(response));
@@ -50,11 +52,11 @@ $(() => {
         $("#allCoins").empty();
         // $("#chartContainer").empty();
         $(`#headerSpinner`).addClass("loader");
-        allCoinsArray = Coins.slice(0, 500); //slice the array for how much coins we want to see
+        allCoinsArray = Coins.slice(0, 12); //slice the array for how much coins we want to see
         let i = 0;
         for (const item of Coins) { //can run on allCoinsArray and dont need if and index
             i++;
-            if (i <= 500) {
+            if (i <= 12) {
                 let el = drawOneCoin(item);
                 $("#allCoins").append(el);
                 $(`#headerSpinner`).removeClass("loader");
@@ -99,6 +101,87 @@ $(() => {
         `;
 
         const el = $(str)[0]; //get all the div
+
+        /*chack if switch pressed */
+        $(".switch", el).click(function(e) {
+            let obj = e.currentTarget;
+            const nameSwitch = obj.offsetParent.firstChild.nextSibling.childNodes[1].innerText;
+            if (obj.firstElementChild.checked) { //אם מסומן תכנס
+                if (switchedArray.length == 0) { //אם מערך 0 תכניס את השם למערך
+                    switchedArray.push(nameSwitch);
+                    return;
+                } else { // אם מערך לא ריק 
+                    if (switchedArray.length < 5) {
+                        for (let index = 0; index < switchedArray.length; index++) { // כל עוד אינדקס פחות מאורך המערך
+                            if (switchedArray[index] === nameSwitch) { //בודק האם השם נמצא במערך אם כן מוחק אותו
+                                switchedArray.splice(index, 1);
+                                return;
+                            }
+                        }
+                        switchedArray.push(nameSwitch);
+                    } else {
+                        Modal();
+
+
+
+
+
+                    }
+                }
+            }
+        });
+
+
+
+
+
+
+
+        //מצייר את המודל עם 5 המטבעות שבחרנו
+        function Modal() {
+            let forModal = "";
+            for (let index = 0; index < switchedArray.length; index++) {
+
+                let str =
+                    `<div class=" row">
+                        <h5 class="card-title col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">${switchedArray[index]}</h5>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>`
+                forModal += str;
+
+            }
+            $(`#allCoins`).append(`<!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+              <div class="modal-dialog">
+              
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">you allowed only five coins if you want to cahnge press on one</h4>
+                  </div>
+                  <div class="modal-body">
+                  ${forModal}
+                  </div>
+                  <div class="modal-footer">
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+                
+              </div>
+            </div>`);
+            $("#myModal").modal();
+            const el = $(str)[0]; //get all the div
+            $(".switch", el).click(function(e) {
+                let obj = e.currentTarget;
+            });
+
+        }
+
 
 
         /*chack if more info pressed */
