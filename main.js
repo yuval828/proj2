@@ -57,7 +57,7 @@ $(() => {
         for (const item of Coins) { //can run on allCoinsArray and dont need if and index
             i++;
             if (i <= 12) {
-                item.checked = "false";
+                // item.checked = "false";
                 let el = drawOneCoin(item);
                 $("#allCoins").append(el);
                 $(`#headerSpinner`).removeClass("loader");
@@ -83,7 +83,7 @@ $(() => {
             <div class=" row">
                 <h5 class="card-title col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">${item.symbol}</h5>
                 <label class="switch" >
-                    <input type="checkbox" id="switch${item.symbol}" checked="${item.checked}">
+                    <input type="checkbox" id="switch${item.symbol}" >
                     <span class="slider round"></span>
                 </label>
             </div>
@@ -119,20 +119,20 @@ $(() => {
                 switchedArray.push(item);
 
 
-                $(`#switch${item.symbol}`).attr('checked', true);
-                allCoinsArray[i].checked = "true";
+                $(`#switch${item.symbol}`).attr('checked');
+                allCoinsArray[i].checked = true;
                 return;
             } else { // אם מערך לא ריק 
                 if (switchedArray.length <= 5) {
                     for (let index = 0; index < switchedArray.length; index++) { // כל עוד אינדקס פחות מאורך המערך
                         if (switchedArray[index].symbol === item.symbol) { //בודק האם השם נמצא במערך אם כן מוחק אותו
-                            $(`#switch${item.symbol}`).attr('checked', false);
-                            allCoinsArray[i].checked = "false";
+                            $(`#switch${item.symbol}`).removeAttr('checked');
+                            allCoinsArray[i].checked = false;
                             switchedArray.splice(index, 1);
                             return;
                         }
                     }
-                    $(`#switch${item.symbol}`).attr('checked', true);
+                    $(`#switch${item.symbol}`).attr('checked');
                     allCoinsArray[i].checked = "true";
                     switchedArray.push(item);
                     if (switchedArray.length == 6) {
