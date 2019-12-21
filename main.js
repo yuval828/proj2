@@ -118,17 +118,12 @@ $(() => {
             if (switchedArray.length == 0) { //אם מערך 0 תכניס את השם למערך
                 switchedArray.push(item);
 
-                // const array1 = [5, 12, 8, 130, 44];
 
-                // const i = (element) => element == item.symbol;
-
-                // console.log(allCoinsArray.findIndex(i));
-                // const i = (element) => element == item.symbol;
                 $(`#switch${item.symbol}`).attr('checked', true);
                 allCoinsArray[i].checked = "true";
                 return;
             } else { // אם מערך לא ריק 
-                if (switchedArray.length < 5) {
+                if (switchedArray.length <= 5) {
                     for (let index = 0; index < switchedArray.length; index++) { // כל עוד אינדקס פחות מאורך המערך
                         if (switchedArray[index].symbol === item.symbol) { //בודק האם השם נמצא במערך אם כן מוחק אותו
                             $(`#switch${item.symbol}`).attr('checked', false);
@@ -140,12 +135,14 @@ $(() => {
                     $(`#switch${item.symbol}`).attr('checked', true);
                     allCoinsArray[i].checked = "true";
                     switchedArray.push(item);
-                } else {
-                    Modal();
-
-
-
-
+                    if (switchedArray.length == 6) {
+                        Modal();
+                    }
+                    // } else {
+                    //     $(`#switch${item.symbol}`).attr('checked', true);
+                    //     allCoinsArray[i].checked = "true";
+                    //     switchedArray.push(item);
+                    //     Modal();
 
                 }
             }
@@ -158,7 +155,7 @@ $(() => {
 
 
 
-        //מצייר את המודל עם 5 המטבעות שבחרנו
+        //מצייר את המודל עם 6 המטבעות שבחרנו
         function Modal() {
             let forModal = "";
             for (let index = 0; index < switchedArray.length; index++) {
@@ -167,7 +164,7 @@ $(() => {
                     `<div class=" row">
                         <h5 class="card-title col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">${switchedArray[index].symbol}</h5>
                         <label class="switch">
-                            <input type="checkbox" checked="true">
+                            <input type="checkbox" checked="${switchedArray[index].checked}">
                             <span class="slider round"></span>
                         </label>
                     </div>`
@@ -182,13 +179,13 @@ $(() => {
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">you allowed only five coins if you want to change press on one</h4>
+                    <h4 class="modal-title">the maximum coins you are allowed is five, please unchecked one and save. or press close to remove the last coin</h4>
                   </div>
                   <div class="modal-body">
                   ${forModal}
                   </div>
                   <div class="modal-footer">
-                  <button type="button" class="btn btn-primary">Save changes</button>
+                  <button type="button" class="btn btn-primary">Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                   </div>
                 </div>
@@ -196,10 +193,11 @@ $(() => {
               </div>
             </div>`);
             $("#myModal").modal();
-            const el = $(str)[0]; //get all the div
-            $(".switch", el).click(function(e) {
-                let obj = e.currentTarget;
-            });
+
+            // const el = $(str)[0]; //get all the div
+            // $(".switch", el).click(function(e) {
+            //     let obj = e.currentTarget;
+            // });
 
         }
 
