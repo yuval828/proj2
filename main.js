@@ -105,7 +105,7 @@ $(() => {
         const el = $(str)[0]; //get all the div
 
         /*chack if switch pressed */
-        $(".switch", el).mouseup(function(e) {
+        $(el).find(".switch").mouseup(function(e) {
             // let obj = e.currentTarget;
             // const nameSwitch = obj.offsetParent.firstChild.nextSibling.childNodes[1].innerText;
 
@@ -156,13 +156,35 @@ $(() => {
 
 
 
-
+        function drawOneCoinModal() {
+            let str =
+                `<div class=" row">
+                <h5 class="card-title col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">${item.symbol}</h5>
+                <label class="switch">
+                    <input type="checkbox" ${item.checked ? "checked":""}>
+                    <span class="slider round"></span>
+                </label>
+            </div>`
+            const el = $(str)[0]; //get all the div
+            return el;
+        }
 
 
 
         //מצייר את המודל עם 6 המטבעות שבחרנו
         function Modal() {
             let forModal = "";
+            $(`#allCoins`).append(`<!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+              <div class="modal-dialog">
+              
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">the maximum coins you are allowed is five, please unchecked one and save. or press close to remove the last coin</h4>
+                  </div>`);
+
             for (const item of switchedArray) {
 
                 let str =
@@ -176,17 +198,7 @@ $(() => {
                 forModal += str;
 
             }
-            $(`#allCoins`).append(`<!-- Modal -->
-            <div class="modal fade" id="myModal" role="dialog">
-              <div class="modal-dialog">
-              
-                <!-- Modal content-->
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">the maximum coins you are allowed is five, please unchecked one and save. or press close to remove the last coin</h4>
-                  </div>
-                  <div class="modal-body">
+            $(`#allCoins`).append(`
                   ${forModal}
                   </div>
                   <div class="modal-footer">
