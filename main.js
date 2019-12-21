@@ -121,7 +121,7 @@ $(() => {
                 console.log(switchedArray);
 
 
-                $(`#switch${item.symbol}`).attr('checked');
+                $(`#switch${item.symbol}`).attr('checked', "checked");
                 console.log(switchedArray);
                 allCoinsArray[i].checked = true;
                 return;
@@ -138,7 +138,7 @@ $(() => {
                             return;
                         }
                     }
-                    $(`#switch${item.symbol}`).attr('checked');
+                    $(`#switch${item.symbol}`).attr('checked', "checked");
                     console.log(switchedArray);
                     allCoinsArray[i].checked = true;
                     switchedArray.push(item);
@@ -186,7 +186,7 @@ $(() => {
                         console.log(switchedArray);
                         return;
                     } else {
-                        $(`#modalSwitch${item.symbol}`).attr('checked');
+                        $(`#modalSwitch${item.symbol}`).attr('checked', "checked");
                         console.log(switchedArray);
                         item.checked = true;
                         switchedArray.push(item);
