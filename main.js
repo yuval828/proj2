@@ -133,7 +133,7 @@ $(() => {
                         }
                     }
                     $(`#switch${item.symbol}`).attr('checked');
-                    allCoinsArray[i].checked = "true";
+                    allCoinsArray[i].checked = true;
                     switchedArray.push(item);
                     if (switchedArray.length == 6) {
                         Modal();
