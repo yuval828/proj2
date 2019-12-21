@@ -77,6 +77,9 @@ $(() => {
      */
 
 
+    //
+    // switchEl.find("input").on("change", e => console.log(e.currentTarget.checked))
+
     /* a single coin draw*/
     function drawOneCoin(item) {
         const str = `
@@ -103,9 +106,12 @@ $(() => {
         `;
 
         const el = $(str)[0]; //get all the div
+        // const checkbox = $(el).find(".switch > input")[0]
 
         /*chack if switch pressed */
-        $(el).find(".switch").mouseup(function(e) {
+        $(el).find(".switch > input").click(function(e) {
+            const checkbox = e.target;
+            const isChecked = checkbox.checked;
             // let obj = e.currentTarget;
             // const nameSwitch = obj.offsetParent.firstChild.nextSibling.childNodes[1].innerText;
 
