@@ -120,7 +120,6 @@ $(() => {
                 switchedArray.push(item);
                 console.log(switchedArray);
 
-
                 $(`#switch${item.symbol}`).attr('checked', "checked");
                 console.log(switchedArray);
                 allCoinsArray[i].checked = true;
