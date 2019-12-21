@@ -122,6 +122,7 @@ $(() => {
 
 
                 $(`#switch${item.symbol}`).attr('checked');
+                console.log(switchedArray);
                 allCoinsArray[i].checked = true;
                 return;
             } else { // אם מערך לא ריק 
@@ -130,6 +131,7 @@ $(() => {
                     for (let index = 0; index < switchedArray.length; index++) { // כל עוד אינדקס פחות מאורך המערך
                         if (switchedArray[index].symbol === item.symbol) { //בודק האם השם נמצא במערך אם כן מוחק אותו
                             $(`#switch${item.symbol}`).removeAttr('checked');
+                            console.log(switchedArray);
                             allCoinsArray[i].checked = false;
                             switchedArray.splice(index, 1);
                             console.log(switchedArray);
@@ -137,12 +139,14 @@ $(() => {
                         }
                     }
                     $(`#switch${item.symbol}`).attr('checked');
+                    console.log(switchedArray);
                     allCoinsArray[i].checked = true;
                     switchedArray.push(item);
                     console.log(switchedArray);
 
                     if (switchedArray.length == 6) {
                         $(`#switch${item.symbol}`).removeAttr('checked');
+                        console.log(switchedArray);
                         allCoinsArray[i].checked = false;
                         switchedArray.splice(switchedArray.length - 1, 1)
                         console.log(switchedArray);
@@ -175,13 +179,15 @@ $(() => {
             $(el).find(".switch").mouseup(e => {
                 for (let index = 0; index < switchedArray.length; index++) { // כל עוד אינדקס פחות מאורך המערך
                     if (switchedArray[index].symbol === item.symbol) { //בודק האם השם נמצא במערך אם כן מוחק אותו
-                        $(`#switch${item.symbol}`).removeAttr('checked');
+                        $(`#modalSwitch${item.symbol}`).removeAttr('checked');
+                        console.log(switchedArray);
                         item.checked = false;
                         switchedArray.splice(index, 1);
                         console.log(switchedArray);
                         return;
                     } else {
-                        $(`#switch${item.symbol}`).attr('checked');
+                        $(`#modalSwitch${item.symbol}`).attr('checked');
+                        console.log(switchedArray);
                         item.checked = true;
                         switchedArray.push(item);
                         console.log(switchedArray);
