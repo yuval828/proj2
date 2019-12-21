@@ -21,7 +21,7 @@ $(() => {
         $(`footer`).html(`
         <div id="chartContainer" style="height: 100%; width: 100%;"></div>
         `);
-        getAjaxData("https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,BTC&tsyms=USD", response => drawGraph(response));
+        getAjaxData(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${switchedArray[0]},BTC&tsyms=USD`, response => drawGraph(response));
     });
 
     function getAjaxData(url, callback) {
@@ -38,11 +38,11 @@ $(() => {
         let priceCoinArr = [];
         for (const coin in allCoins) { //coin = ETH
             { //price = USD
-                let coinName = `${coin}`;
+                // let coinName = `${coin}`;
 
-                let EEE = parseFloat(allCoins.ETH.USD);
-                EEE = parseFloat(allCoins.coinName.USD);
-                EEE = Number("allCoins.coin.USD");
+                let EEE = parseFloat(allCoins[coin].USD);
+                // EEE = parseFloat(allCoins.coinName.USD);
+                // EEE = Number("allCoins.coin.USD");
 
                 priceCoinArr.push(EEE);
 
@@ -53,7 +53,7 @@ $(() => {
         var dataPoints = [];
         var chart = new CanvasJS.Chart("chartContainer", {
             title: {
-                text: `${coin[0]},${coin[1]} to USD`
+                text: `${allCoins[coin]},${allCoins[coin]} to USD`
             },
             data: [{
                 type: "spline",
@@ -64,7 +64,7 @@ $(() => {
         chart.render();
 
         // var yVal = 15,
-        updateCount = 0;
+        let updateCount = 0;
         var updateChart = function() {
             for (let index = 0; index < priceCoinArr.length; index++) {
 
