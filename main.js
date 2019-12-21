@@ -196,7 +196,7 @@ $(() => {
             const headerModal = $(str)[0];
 
             for (const item of switchedArray) {
-
+                drawOneCoinModal(item);
 
                 $("#myModal").modal();
 
