@@ -16,7 +16,8 @@ $(() => {
     //get all coins at home press
     $("#Home").click(() => {
         HomePageDisplay();
-        getAjaxData("https://api.coingecko.com/api/v3/coins/list", response => displayAllCoins(response));
+        displayAllCoins(allCoinsArray);
+        // getAjaxData("https://api.coingecko.com/api/v3/coins/list", response => displayAllCoins(response));
     });
 
     function HomePageDisplay() {
