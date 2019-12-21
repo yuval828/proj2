@@ -83,7 +83,7 @@ $(() => {
             <div class=" row">
                 <h5 class="card-title col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">${item.symbol}</h5>
                 <label class="switch" >
-                    <input type="checkbox" id="switch${item.symbol}" >
+                    <input type="checkbox" id="switch${item.symbol}" ${item.checked ? "checked":""}>
                     <span class="slider round"></span>
                 </label>
             </div>
