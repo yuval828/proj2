@@ -136,7 +136,10 @@ $(() => {
                     $(`#switch${item.symbol}`).attr('checked');
                     allCoinsArray[i].checked = true;
                     switchedArray.push(item);
+
                     if (switchedArray.length == 6) {
+                        $(`#switch${item.symbol}`).removeAttr('checked');
+                        allCoinsArray[i].checked = false;
                         Modal();
                     }
                     // } else {
@@ -165,7 +168,7 @@ $(() => {
                     `<div class=" row">
                         <h5 class="card-title col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">${switchedArray[index].symbol}</h5>
                         <label class="switch">
-                            <input type="checkbox" checked="${switchedArray[index].checked}">
+                            <input type="checkbox" ${item.checked ? "checked":""}>
                             <span class="slider round"></span>
                         </label>
                     </div>`
