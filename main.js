@@ -140,6 +140,7 @@ $(() => {
                     if (switchedArray.length == 6) {
                         $(`#switch${item.symbol}`).removeAttr('checked');
                         allCoinsArray[i].checked = false;
+
                         Modal();
                     }
                     // } else {
