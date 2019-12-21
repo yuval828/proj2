@@ -82,8 +82,8 @@ $(() => {
         <div class="coinDiv col-xl-3 col-lg-3 col-md-4 col-sm-12 " >
             <div class=" row">
                 <h5 class="card-title col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">${item.symbol}</h5>
-                <label class="switch" id="switch${item.symbol}" checked="${item.checked}" >
-                    <input type="checkbox">
+                <label class="switch" >
+                    <input type="checkbox" id="switch${item.symbol}" checked="${item.checked}">
                     <span class="slider round"></span>
                 </label>
             </div>
