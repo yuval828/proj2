@@ -118,6 +118,7 @@ $(() => {
 
             if (switchedArray.length == 0) { //אם מערך 0 תכניס את השם למערך
                 switchedArray.push(item);
+                console.log(switchedArray);
 
 
                 $(`#switch${item.symbol}`).attr('checked');
@@ -125,23 +126,28 @@ $(() => {
                 return;
             } else { // אם מערך לא ריק 
                 if (switchedArray.length <= 5) {
+                    console.log(switchedArray);
                     for (let index = 0; index < switchedArray.length; index++) { // כל עוד אינדקס פחות מאורך המערך
                         if (switchedArray[index].symbol === item.symbol) { //בודק האם השם נמצא במערך אם כן מוחק אותו
                             $(`#switch${item.symbol}`).removeAttr('checked');
                             allCoinsArray[i].checked = false;
                             switchedArray.splice(index, 1);
+                            console.log(switchedArray);
                             return;
                         }
                     }
                     $(`#switch${item.symbol}`).attr('checked');
                     allCoinsArray[i].checked = true;
                     switchedArray.push(item);
+                    console.log(switchedArray);
 
                     if (switchedArray.length == 6) {
                         $(`#switch${item.symbol}`).removeAttr('checked');
                         allCoinsArray[i].checked = false;
+                        switchedArray.splice(switchedArray.length - 1, 1)
+                        console.log(switchedArray);
 
-                        Modal();
+                        Modal(allCoinsArray[i]);
                     }
                     // } else {
                     //     $(`#switch${item.symbol}`).attr('checked', true);
@@ -156,27 +162,44 @@ $(() => {
 
 
 
-        function drawOneCoinModal() {
+        function drawOneCoinModal(item) {
             let str =
-                `<div class=" row">
+                `<div class="row">
                 <h5 class="card-title col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">${item.symbol}</h5>
                 <label class="switch">
                     <input type="checkbox" ${item.checked ? "checked":""}>
                     <span class="slider round"></span>
                 </label>
-            </div>`
+                </div>`
             const el = $(str)[0]; //get all the div
+            $(el).find(".switch").mouseup(e => {
+                for (let index = 0; index < switchedArray.length; index++) { // כל עוד אינדקס פחות מאורך המערך
+                    if (switchedArray[index].symbol === item.symbol) { //בודק האם השם נמצא במערך אם כן מוחק אותו
+                        $(`#switch${item.symbol}`).removeAttr('checked');
+                        item.checked = false;
+                        switchedArray.splice(index, 1);
+                        console.log(switchedArray);
+                        return;
+                    } else {
+                        $(`#switch${item.symbol}`).attr('checked');
+                        item.checked = true;
+                        switchedArray.push(item);
+                        console.log(switchedArray);
+                    }
+                }
+
+
+            })
             return el;
         }
 
 
 
         //מצייר את המודל עם 6 המטבעות שבחרנו
-        function Modal() {
+        function Modal(sixCoin) {
             // let forModal = "";
             // $(`#allCoins`).append(
-            let str = `<!-- Modal -->
-            <div class="modal fade" id="myModal" role="dialog">
+            let str = `<div class="modal fade" id="myModal" role="dialog">
               <div class="modal-dialog">
               
                 <!-- Modal content-->
@@ -185,20 +208,18 @@ $(() => {
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">the maximum coins you are allowed is five, please unchecked one and save. or press close to remove the last coin</h4>
                   </div>
-                  <div class=" row">
-                  ${el}
-                  </div>
+                  <div class="coins"></div>
                   <div class="modal-footer">
                   <button type="button" class="btn btn-primary">Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                   </div>
                 </div>`
             const headerModal = $(str)[0];
+            const coinsToDisplay = [...switchedArray, sixCoin] //add the two array to "coinsToDisplay"
+            for (const item of coinsToDisplay) {
+                const coinEl = drawOneCoinModal(item);
+                $(headerModal).find(".coins").append(coinEl)
 
-            for (const item of switchedArray) {
-                drawOneCoinModal(item);
-
-                $("#myModal").modal();
 
                 // const el = $(str)[0]; //get all the div
                 // $(".switch", el).click(function(e) {
@@ -206,6 +227,11 @@ $(() => {
                 // });
 
             }
+            $(`#allCoins`).append(headerModal)
+            $(headerModal).modal();
+            $(headerModal).on("hide.bs.modal", e => {
+                displayAllCoins(allCoinsArray)
+            })
 
         }
 
