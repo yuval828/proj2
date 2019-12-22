@@ -85,7 +85,7 @@ $(() => {
                         xValueFormatString: "mm:ss",
                         yValueFormatString: "$#,##0.#",
                         dataPoints: [
-                            { x: new Date(2016, 1, 1), y: `${priceCoinArr[0]}` },
+                            { x: new Date(2016, 1, 1), y: priceCoinArr[0] },
                             // { x: new Date(2016, 1, 1), y: `${priceCoinArr[0]}` },
                             { x: new Date(2016, 1, 1), y: 10 },
                             { x: new Date(2016, 11, 1), y: 20 }
