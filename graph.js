@@ -3,8 +3,8 @@
 
 
 // from about/graph - search - bring to home 
-$((switchedArray) => {
-
+$(() => {
+    // let tableArr = switchedArray;
     /*LiveReports graph*/
     $("#LiveReports").click(() => {
         $("#allCoins").empty();

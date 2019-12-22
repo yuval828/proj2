@@ -309,7 +309,7 @@ $(() => {
         let coinAtList = false;
         if (searchCoin == "") {
             $(`#headerSpinner`).removeClass("loader");
-            alert("please enter a Symbol name: like ZOC or Name: like 01coin");
+            alert("please enter a Symbol name like: ZOC \n or Name like: 01coin");
             return;
         }
         $.grep(allCoinsArray, function(obj) {
@@ -332,7 +332,7 @@ $(() => {
         })[0];
         if (!coinAtList) {
             $(`#headerSpinner`).removeClass("loader");
-            alert(`you didnt enter a correct coin please enter a Symbol name: like BTC or Name: like bitcoin`);
+            alert(`the coin you entered is not on the list \n please enter a correct coin Symbol name like: ZOC \n or Name like: 01coin`);
         }
     });
 
