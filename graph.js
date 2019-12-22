@@ -3,7 +3,7 @@
 
 
 // from about/graph - search - bring to home 
-$(() => {
+$((switchedArray) => {
 
     /*LiveReports graph*/
     $("#LiveReports").click(() => {
@@ -21,7 +21,7 @@ $(() => {
         $(`footer`).html(`
         <div id="chartContainer" style="height: 100%; width: 100%;"></div>
         `);
-        getAjaxData(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${switchedArray[0]},BTC&tsyms=USD`, response => drawGraph(response));
+        getAjaxData(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${switchedArray[0].symbol},BTC&tsyms=USD`, response => drawGraph(response));
     });
 
     function getAjaxData(url, callback) {
