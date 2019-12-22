@@ -7,6 +7,7 @@ $(() => {
     let allCoinsArray = [];
     let MoreInfoArray = [];
     let switchedArray = [];
+    let sixCoin = "";
 
 
     //get all coins at load
@@ -17,15 +18,10 @@ $(() => {
     $("#Home").click(() => {
         HomePageDisplay();
         displayAllCoins(allCoinsArray);
-        // getAjaxData("https://api.coingecko.com/api/v3/coins/list", response => displayAllCoins(response));
     });
 
     function HomePageDisplay() {
-        $(`footer`).html(`
-        <div id="allCoins" class="row bgimg-3"></div>
-        `);
-        // $("#allCoins").empty();
-        // $("#chartContainer").empty();
+        $(`footer`).html(`<div id="allCoins" class="row bgimg-3"></div>`);
         $(`#headerSpinner`).addClass("loader");
         $(".bgimg-1").css({ "background-image": `url("img/homeHeader.jpg")`, "min-height": "50%" });
         $("#firstParalex").html("<b><u>crypTrack</b></u><br> the crypto database");
@@ -47,18 +43,14 @@ $(() => {
 
     /** display all coins */
     function displayAllCoins(Coins) { //run on the array for how many coins we want to draw
-        $(`footer`).html(`
-            <div id="allCoins" class="row bgimg-3"></div>
-            `);
+        $(`footer`).html(`<div id="allCoins" class="row bgimg-3"></div>`);
         $("#allCoins").empty();
-        // $("#chartContainer").empty();
         $(`#headerSpinner`).addClass("loader");
         allCoinsArray = Coins.slice(0, 12); //slice the array for how much coins we want to see
         let i = 0;
         for (const item of Coins) { //can run on allCoinsArray and dont need if and index
             i++;
             if (i <= 12) {
-                // item.checked = "false";
                 let el = drawOneCoin(item);
                 $("#allCoins").append(el);
                 $(`#headerSpinner`).removeClass("loader");
@@ -67,17 +59,6 @@ $(() => {
     }
     /** display all coins end */
 
-    /** new simple bootstrap switch???? to change?
-     * 
-     * <!-- Default switch -->
-    <div class="custom-control custom-switch">
-      <input type="checkbox" class="custom-control-input" id="customSwitches">
-      <label class="custom-control-label" for="customSwitches"></label>
-    </div>
-     */
-
-
-    //
     // switchEl.find("input").on("change", e => console.log(e.currentTarget.checked))
 
     /* a single coin draw*/
@@ -87,7 +68,7 @@ $(() => {
             <div class=" row">
                 <h5 class="card-title col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">${item.symbol}</h5>
                 <label class="switch" >
-                    <input type="checkbox" id="switch${item.symbol}" ${item.checked ? "checked":""}>
+                    <input type="checkbox" id="switch${item.symbol}" ${item.isChecked ? "checked":""}>
                     <span class="slider round"></span>
                 </label>
             </div>
@@ -104,69 +85,42 @@ $(() => {
             
         </div>
         `;
-
         const el = $(str)[0]; //get all the div
         // const checkbox = $(el).find(".switch > input")[0]
+
 
         /*chack if switch pressed */
         $(el).find(".switch > input").click(function(e) {
             const checkbox = e.target;
             const isChecked = checkbox.checked;
-            // let obj = e.currentTarget;
-            // const nameSwitch = obj.offsetParent.firstChild.nextSibling.childNodes[1].innerText;
-
-            // // if (!obj.firstElementChild.checked) { //אם מסומן תכנס
-
-
-
-
-            const i = allCoinsArray.findIndex(element => element.symbol == item.symbol); //index of allcoinarray
 
             if (switchedArray.length == 0) { //אם מערך 0 תכניס את השם למערך
+                item.isChecked = checkbox.checked;
                 switchedArray.push(item);
-                console.log(switchedArray);
-
-                $(`#switch${item.symbol}`).attr('checked', "checked");
-                console.log(switchedArray);
-                allCoinsArray[i].checked = true;
                 return;
             } else { // אם מערך לא ריק 
                 if (switchedArray.length <= 5) {
-                    console.log(switchedArray);
+
                     for (let index = 0; index < switchedArray.length; index++) { // כל עוד אינדקס פחות מאורך המערך
                         if (switchedArray[index].symbol === item.symbol) { //בודק האם השם נמצא במערך אם כן מוחק אותו
-                            $(`#switch${item.symbol}`).removeAttr('checked');
-                            console.log(switchedArray);
-                            allCoinsArray[i].checked = false;
+                            item.isChecked = false;
                             switchedArray.splice(index, 1);
-                            console.log(switchedArray);
                             return;
                         }
                     }
-                    $(`#switch${item.symbol}`).attr('checked', "checked");
-                    console.log(switchedArray);
-                    allCoinsArray[i].checked = true;
+                    item.isChecked = checkbox.checked;
                     switchedArray.push(item);
-                    console.log(switchedArray);
 
                     if (switchedArray.length == 6) {
-                        $(`#switch${item.symbol}`).removeAttr('checked');
-                        console.log(switchedArray);
-                        allCoinsArray[i].checked = false;
+                        item.isChecked = false;
+                        sixCoin = item;
                         switchedArray.splice(switchedArray.length - 1, 1)
-                        console.log(switchedArray);
 
-                        Modal(allCoinsArray[i]);
+
+                        Modal(sixCoin);
                     }
-                    // } else {
-                    //     $(`#switch${item.symbol}`).attr('checked', true);
-                    //     allCoinsArray[i].checked = "true";
-                    //     switchedArray.push(item);
-                    //     Modal();
-
                 }
             }
-            // }
         });
 
 
@@ -176,28 +130,36 @@ $(() => {
                 `<div class="row">
                 <h5 class="card-title col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">${item.symbol}</h5>
                 <label class="switch">
-                    <input type="checkbox" ${item.checked ? "checked":""}>
+                    <input type="checkbox" ${item.isChecked ? "checked":""}>
                     <span class="slider round"></span>
                 </label>
                 </div>`
             const el = $(str)[0]; //get all the div
-            $(el).find(".switch").mouseup(e => {
-                for (let index = 0; index < switchedArray.length; index++) { // כל עוד אינדקס פחות מאורך המערך
-                    if (switchedArray[index].symbol === item.symbol) { //בודק האם השם נמצא במערך אם כן מוחק אותו
-                        $(`#modalSwitch${item.symbol}`).removeAttr('checked');
-                        console.log(switchedArray);
-                        item.checked = false;
-                        switchedArray.splice(index, 1);
-                        console.log(switchedArray);
-                        return;
-                    } else {
-                        $(`#modalSwitch${item.symbol}`).attr('checked', "checked");
-                        console.log(switchedArray);
-                        item.checked = true;
+            $(el).find(".switch > input").click(function(e) {
+                const checkbox = e.target;
+                const isChecked = checkbox.checked;
+
+                if (switchedArray.find(el => el.symbol == item.symbol)) {
+                    item.isChecked = false;
+                    switchedArray = switchedArray.filter(e => e !== item)
+                    if (sixCoin.enterToArr) {
+                        sixCoin.enterToArr = false;
+                        sixCoin.isChecked = true;
+                        switchedArray.push(sixCoin);
+                    }
+                    return;
+                } else {
+                    if (switchedArray.length < 5) {
+
+                        item.isChecked = checkbox.checked;
                         switchedArray.push(item);
-                        console.log(switchedArray);
+                    } else {
+                        sixCoin = item;
+                        sixCoin.enterToArr = checkbox.checked;
+                        return sixCoin;
                     }
                 }
+
 
 
             })
@@ -206,10 +168,9 @@ $(() => {
 
 
 
-        //מצייר את המודל עם 6 המטבעות שבחרנו
+        // מצייר את המודל עם 6 המטבעות שבחרנו השישי לא מסומן כנבחר
         function Modal(sixCoin) {
-            // let forModal = "";
-            // $(`#allCoins`).append(
+
             let str = `<div class="modal fade" id="myModal" role="dialog">
               <div class="modal-dialog">
               
@@ -230,25 +191,18 @@ $(() => {
             for (const item of coinsToDisplay) {
                 const coinEl = drawOneCoinModal(item);
                 $(headerModal).find(".coins").append(coinEl)
-
-
-                // const el = $(str)[0]; //get all the div
-                // $(".switch", el).click(function(e) {
-                //     let obj = e.currentTarget;
-                // });
-
             }
-            $(`#allCoins`).append(headerModal)
-            $(headerModal).modal();
-            $(headerModal).on("hide.bs.modal", e => {
+
+            $(headerModal).modal().on("hide.bs.modal", e => {
                 displayAllCoins(allCoinsArray)
             })
-
         }
+
+
+
 
         /*chack if more info pressed */
         $(".getInfo", el).click(function(e) {
-
             let obj1 = e.currentTarget;
             if (obj1.attributes[4].value == "false") { //only if MoreInfo is closed!
                 $(`#showSpinner${item.id}`).addClass('spinner-border spinner-border-sm');
@@ -262,11 +216,9 @@ $(() => {
                             return;
                         } else {
                             islocal = "15";
-
                             return (market_cap_rank = obj.market_cap_rank);
                         }
                     }
-
                 })[0];
 
 
@@ -274,7 +226,6 @@ $(() => {
                     for (let index = 0; index < MoreInfoArray.length; index++) {
                         if (MoreInfoArray[index].market_cap_rank === Number(market_cap_rank)) {
                             MoreInfoArray.splice(index, 1);
-
                             getAjaxData(`https://api.coingecko.com/api/v3/coins/${(obj1.id)}`, response => displayMoreInfo(response, islocal));
                             return;
                         }
@@ -423,6 +374,4 @@ $(() => {
         //         </div>`
         // );
     });
-
-
 });
