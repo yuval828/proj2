@@ -2,11 +2,12 @@
 "use strict";
 
 
+let switchedArray = [];
+
 // from about/graph - search - bring to home 
 $(() => {
     let allCoinsArray = [];
     let MoreInfoArray = [];
-    let switchedArray = [];
     let sixCoin = "";
 
 
@@ -150,7 +151,6 @@ $(() => {
                     return;
                 } else {
                     if (switchedArray.length < 5) {
-
                         item.isChecked = checkbox.checked;
                         switchedArray.push(item);
                     } else {
@@ -182,7 +182,7 @@ $(() => {
                   </div>
                   <div class="coins"></div>
                   <div class="modal-footer">
-                  <button type="button" class="btn btn-primary">Save</button>
+         
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                   </div>
                 </div>`
