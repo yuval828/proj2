@@ -46,7 +46,7 @@ $(() => {
                 // EEE = parseFloat(allCoins.coinName.USD);
                 // EEE = Number("allCoins.coin.USD");
 
-                priceCoinArr.push(+allCoins[coin].USD);
+                priceCoinArr.push(allCoins[coin].USD);
             }
 
 
@@ -85,12 +85,26 @@ $(() => {
                         xValueFormatString: "mm:ss",
                         yValueFormatString: "$#,##0.#",
                         dataPoints: [
-                            { x: new Date(2016, 1, 1), y: priceCoinArr[0] },
+                            { x: new Date(), y: priceCoinArr[0] },
                             // { x: new Date(2016, 1, 1), y: `${priceCoinArr[0]}` },
-                            { x: new Date(2016, 1, 1), y: 10 },
-                            { x: new Date(2016, 11, 1), y: 20 }
+                            // { x: new Date(), y: 10 },
+                            // { x: new Date(), y: 20 }
                         ]
                     },
+                    // {
+                    //     type: "spline",
+                    //     name: switchedArray[1].symbol,
+                    //     showInLegend: true,
+                    //     xValueFormatString: "mm:ss",
+                    //     yValueFormatString: "$#,##0.#",
+                    //     dataPoints: []
+
+                    //         // { x: new Date(2016, 1, 1), y: `${priceCoinArr[0]}` },
+                    //         // { x: new Date(), y: 10 },
+                    //         // { x: new Date(), y: 20 }
+
+                    // },
+
 
                     // {
                     //     type: "spline",
@@ -131,6 +145,14 @@ $(() => {
 
         }
 
+        // update chart every second
+        setInterval(function() { updateData() }, 20000);
+
+        function updateData() {
+            getAjaxData(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${symbols}&tsyms=USD`, response => drawGraph(response));
+            // dataPoints. x: new Date().getSeconds(), y: priceCoinArr[1] },
+
+        }
 
 
 
@@ -188,7 +210,8 @@ $(() => {
         //     $("#chartContainer").CanvasJSChart().render()
         //     setTimeout(updateData, 2000);
         // }
-
+        // update chart every second
+        //     // setInterval(function() { updateChart() }, 20000);
         // function updateData() {
         //     // getAjaxData(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${symbols}&tsyms=USD`, response => drawGraph(response));
 
