@@ -83,7 +83,7 @@ $(() => {
                         name: switchedArray[0].symbol,
                         showInLegend: true,
                         xValueFormatString: "mm:ss",
-                        yValueFormatString: "$#,##0.#",
+                        yValueFormatString: "$#,##0.####",
                         dataPoints: [
                             { x: new Date(), y: priceCoinArr[0] },
                             // { x: new Date(2016, 1, 1), y: `${priceCoinArr[0]}` },
