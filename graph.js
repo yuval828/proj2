@@ -10,6 +10,10 @@ $(() => {
         const symbols = switchedArray.map(t => t.symbol).join(",");
         let priceCoinArr = [];
         let dataPoints = [];
+        let dataPoints1 = [];
+        let dataPoints2 = [];
+        let dataPoints3 = [];
+        let dataPoints4 = [];
 
         $("#allCoins").empty();
         $(`#headerSpinner`).addClass("loader");
@@ -78,15 +82,46 @@ $(() => {
                     itemclick: toggleDataSeries
                 },
                 data: [{
-                    type: "spline",
-                    showInLegend: true,
-                    name: switchedArray[0].symbol,
-                    xValueFormatString: "mm:ss",
-                    yValueFormatString: "$#,##0.####",
-                    dataPoints: dataPoints
-                }]
-
-
+                        type: "spline",
+                        showInLegend: true,
+                        name: switchedArray[0].symbol,
+                        xValueFormatString: "mm:ss",
+                        yValueFormatString: "$#,##0.#####",
+                        dataPoints: dataPoints
+                    },
+                    {
+                        type: "spline",
+                        showInLegend: true,
+                        name: switchedArray[1].symbol,
+                        xValueFormatString: "mm:ss",
+                        yValueFormatString: "$#,##0.#####",
+                        dataPoints: dataPoints1
+                    },
+                    {
+                        type: "spline",
+                        showInLegend: true,
+                        name: switchedArray[2].symbol,
+                        xValueFormatString: "mm:ss",
+                        yValueFormatString: "$#,##0.#####",
+                        dataPoints: dataPoints2
+                    },
+                    {
+                        type: "spline",
+                        showInLegend: true,
+                        name: switchedArray[3].symbol,
+                        xValueFormatString: "mm:ss",
+                        yValueFormatString: "$#,##0.#####",
+                        dataPoints: dataPoints3
+                    },
+                    {
+                        type: "spline",
+                        showInLegend: true,
+                        name: switchedArray[4].symbol,
+                        xValueFormatString: "mm:ss",
+                        yValueFormatString: "$#,##0.#####",
+                        dataPoints: dataPoints4
+                    }
+                ]
 
             };
 
@@ -103,22 +138,25 @@ $(() => {
         }
 
         // update chart every second
-        setInterval(function() { updateData() }, 20000);
+        setInterval(function() { updateData() }, 2000);
 
         function updateData() {
             getAjaxData(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${symbols}&tsyms=USD`, response => drawGraph(response));
-            // dataPoints. x: new Date().getSeconds(), y: priceCoinArr[1] },
-
-
-            y: priceCoinArr[index]
 
             dataPoints.push({
-
-
-
                 y: priceCoinArr[0]
-
-
+            });
+            dataPoints1.push({
+                y: priceCoinArr[1]
+            });
+            dataPoints2.push({
+                y: priceCoinArr[2]
+            });
+            dataPoints3.push({
+                y: priceCoinArr[3]
+            });
+            dataPoints4.push({
+                y: priceCoinArr[4]
             });
         }
 

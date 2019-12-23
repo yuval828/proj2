@@ -27,7 +27,7 @@ $(() => {
         $(".bgimg-1").css({ "background-image": `url("img/homeHeader.jpg")`, "min-height": "50%" });
         $("#firstParalex").html("<b><u>crypTrack</b></u><br> the crypto database");
         $(".bgimg-2").css({ "background-image": `url("img/homeHeader.jpg")`, "min-height": "50%" });
-        $("#secondParalex").text("");
+        $("#secondParalex").text("choose your coins to see at graph");
         $(`#headerSpinner`).removeClass("loader");
     }
 
