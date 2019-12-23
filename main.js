@@ -47,11 +47,11 @@ $(() => {
         $(`footer`).html(`<div id="allCoins" class="row bgimg-3"></div>`);
         $("#allCoins").empty();
         $(`#headerSpinner`).addClass("loader");
-        allCoinsArray = Coins.slice(0, 12); //slice the array for how much coins we want to see
+        allCoinsArray = Coins.slice(500, 1000); //slice the array for how much coins we want to see
         let i = 0;
-        for (const item of Coins) { //can run on allCoinsArray and dont need if and index
+        for (const item of allCoinsArray) { //can run on allCoinsArray and dont need if and index
             i++;
-            if (i <= 12) {
+            if (i <= 500) {
                 let el = drawOneCoin(item);
                 $("#allCoins").append(el);
                 $(`#headerSpinner`).removeClass("loader");
