@@ -138,13 +138,14 @@ $(() => {
         }
 
         // update chart every second
-        setInterval(function() { updateData() }, 2000);
+        setInterval(function() { updateData() }, 20000);
 
         function updateData() {
             getAjaxData(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${symbols}&tsyms=USD`, response => drawGraph(response));
 
             dataPoints.push({
-                y: priceCoinArr[0]
+                y: priceCoinArr[0],
+                x: new Date().getSeconds()
             });
             dataPoints1.push({
                 y: priceCoinArr[1]
