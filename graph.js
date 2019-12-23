@@ -1,19 +1,29 @@
 /// <reference path="jquery-3.4.1.js" />
 "use strict";
 
-
-// from about/graph - search - bring to home 
+// from about/graph - search - bring to home
 $(() => {
+    let interval;
+    let chart;
+
     // let tableArr = switchedArray;
     /*LiveReports graph*/
     $("#LiveReports").click(() => {
+        if(interval) {
+            clearInterval(interval)
+            interval = null
+        }
+        if(chart) {
+            chart.destroy()
+            chart = null
+        }
         const symbols = switchedArray.map(t => t.symbol).join(",");
-        let priceCoinArr = [];
-        let dataPoints = [];
-        let dataPoints1 = [];
-        let dataPoints2 = [];
-        let dataPoints3 = [];
-        let dataPoints4 = [];
+        // let priceCoinArr = [];
+        // let dataPoints = [];
+        // let dataPoints1 = [];
+        // let dataPoints2 = [];
+        // let dataPoints3 = [];
+        // let dataPoints4 = [];
 
         $("#allCoins").empty();
         $(`#headerSpinner`).addClass("loader");
@@ -29,42 +39,51 @@ $(() => {
         $(`footer`).html(`
         <div id="chartContainer" style="height: 100%; width: 100%;"></div>
         `);
-        getAjaxData(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${symbols}&tsyms=USD`, response => drawGraph(response));
-
+        updateData();
 
         function getAjaxData(url, callback) {
             $.ajax({
                 method: "GET",
                 url: url,
                 error: err => alert("Error: " + err.status),
-                success: response => callback(response)
+                success: response => callback(response),
             });
         }
 
-        function drawGraph(allCoins) { //{"ETH":{"USD":144.3},"BTC":{"USD":7273.66}}
-            // let allCoinsObj = allCoins;
-            // let coinForChart = {};
-            for (const coin in allCoins) { //coin = ETH
-                //price = USD
-                // let coinName = `${coin}`;
-
-                // let EEE = parseFloat(allCoins[coin].USD);
-                // EEE = parseFloat(allCoins.coinName.USD);
-                // EEE = Number("allCoins.coin.USD");
-
-                priceCoinArr.push(allCoins[coin].USD);
+        const data = [];
+        function drawGraph(response) {
+            if(response.Response==="Error") {
+                console.log("no data")
+                return
+            }
+            //{"ETH":{"USD":144.3},"BTC":{"USD":7273.66}}
+            const now = new Date()
+            for (const coin in response) {
+                //coin = ETH
+                const price = response[coin].USD;
+                let dataItem = data.find(t => t.name == coin)
+                if(!dataItem) {
+                    dataItem = {
+                        type: "spline",
+                        showInLegend: true,
+                        name: coin,
+                        xValueFormatString: "mm:ss",
+                        yValueFormatString: "$#,##0.#####",
+                        dataPoints: [],
+                    };    
+                    data.push(dataItem);
+                }
+                dataItem.dataPoints.push({ x: now, y: price})
             }
 
-
-
             var options = {
-                exportEnabled: true,
                 animationEnabled: true,
                 title: {
-                    text: `${symbols} to USD`
+                    text: `${symbols} to USD`,
                 },
                 axisX: {
-                    title: "time"
+                    title: "time",
+                    valueFormatString:"mm:ss",
                 },
                 axisY: {
                     title: "price in usd",
@@ -72,63 +91,25 @@ $(() => {
                     lineColor: "#4F81BC",
                     labelFontColor: "#4F81BC",
                     tickColor: "#4F81BC",
-                    includeZero: false
+                    includeZero: false,
                 },
                 toolTip: {
-                    shared: true
+                    shared: true,
                 },
                 legend: {
                     cursor: "pointer",
-                    itemclick: toggleDataSeries
+                    itemclick: toggleDataSeries,
                 },
-                data: [{
-                        type: "spline",
-                        showInLegend: true,
-                        name: switchedArray[0].symbol,
-                        xValueFormatString: "mm:ss",
-                        yValueFormatString: "$#,##0.#####",
-                        dataPoints: dataPoints
-                    },
-                    {
-                        type: "spline",
-                        showInLegend: true,
-                        name: switchedArray[1].symbol,
-                        xValueFormatString: "mm:ss",
-                        yValueFormatString: "$#,##0.#####",
-                        dataPoints: dataPoints1
-                    },
-                    {
-                        type: "spline",
-                        showInLegend: true,
-                        name: switchedArray[2].symbol,
-                        xValueFormatString: "mm:ss",
-                        yValueFormatString: "$#,##0.#####",
-                        dataPoints: dataPoints2
-                    },
-                    {
-                        type: "spline",
-                        showInLegend: true,
-                        name: switchedArray[3].symbol,
-                        xValueFormatString: "mm:ss",
-                        yValueFormatString: "$#,##0.#####",
-                        dataPoints: dataPoints3
-                    },
-                    {
-                        type: "spline",
-                        showInLegend: true,
-                        name: switchedArray[4].symbol,
-                        xValueFormatString: "mm:ss",
-                        yValueFormatString: "$#,##0.#####",
-                        dataPoints: dataPoints4
-                    }
-                ]
-
+                data: data,
             };
 
-            $("#chartContainer").CanvasJSChart(options);
+            if (!chart) {
+                chart = new CanvasJS.Chart("chartContainer", options); //$("#chartContainer").CanvasJSChart(options);
+            }
+            chart.render()
 
             function toggleDataSeries(e) {
-                if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                if (typeof e.dataSeries.visible === "undefined" || e.dataSeries.visible) {
                     e.dataSeries.visible = false;
                 } else {
                     e.dataSeries.visible = true;
@@ -138,45 +119,32 @@ $(() => {
         }
 
         // update chart every second
-        setInterval(function() { updateData() }, 20000);
+        interval = setInterval(function() {
+            updateData();
+        }, 5000);
 
         function updateData() {
-            getAjaxData(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${symbols}&tsyms=USD`, response => drawGraph(response));
+            getAjaxData(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${symbols}&tsyms=USD`, response =>
+                drawGraph(response),
+            );
 
-            dataPoints.push({
-                y: priceCoinArr[0],
-                x: new Date().getSeconds()
-            });
-            dataPoints1.push({
-                y: priceCoinArr[1]
-            });
-            dataPoints2.push({
-                y: priceCoinArr[2]
-            });
-            dataPoints3.push({
-                y: priceCoinArr[3]
-            });
-            dataPoints4.push({
-                y: priceCoinArr[4]
-            });
+            // dataPoints.push({
+            //     y: priceCoinArr[0],
+            //     x: new Date().getSeconds()
+            // });
+            // dataPoints1.push({
+            //     y: priceCoinArr[1]
+            // });
+            // dataPoints2.push({
+            //     y: priceCoinArr[2]
+            // });
+            // dataPoints3.push({
+            //     y: priceCoinArr[3]
+            // });
+            // dataPoints4.push({
+            //     y: priceCoinArr[4]
+            // });
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         // var dataPoints = [];
 
@@ -225,59 +193,6 @@ $(() => {
         //     $.getJSON("https://canvasjs.com/services/data/datapoints.php?xstart=" + xValue + "&ystart=" + yValue + "&length=" + newDataCount + "&type=json", addData);
         // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         //     var dataPoints = [];
         //     var chart = new CanvasJS.Chart("chartContainer", {
         //         title: {
@@ -304,8 +219,6 @@ $(() => {
         //         // yVal = yVal + Math.round(5 + Math.random() * (-5 - 5));
         //         updateCount++;
 
-
-
         //         chart.options.title.text = "Update " + updateCount;
         //         chart.render();
 
@@ -314,22 +227,6 @@ $(() => {
         //     // update chart every second
         //     // setInterval(function() { updateChart() }, 20000);
         // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         // var options = {
         //     exportEnabled: true,
@@ -396,7 +293,6 @@ $(() => {
         //     ]
         // };
 
-
         // $("#chartContainer").CanvasJSChart(options);
 
         // function toggleDataSeries(e) {
@@ -408,5 +304,4 @@ $(() => {
         //     e.chart.render();
         // }
     });
-
 });
