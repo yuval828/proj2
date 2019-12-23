@@ -101,6 +101,13 @@ button:hover,
 }
 
 
+/*modal */
+
+.coins {
+    padding-left: 15px;
+}
+
+
 /* parallax */
 
 body,
@@ -155,10 +162,6 @@ header {
 }
 
 .caption>span {
-    /* background-color: lightslategray;
-    padding: 10px;
-    letter-spacing: 5px;
-    border-radius: 25px; */
     line-height: normal;
     color: #fff;
     font-size: 53px;
@@ -236,34 +239,6 @@ input:checked+.slider:before {
 
 
 /*switch end*/
-
-
-/* spinner for button */
-
-
-/* .spinner {
-    display: inline-block;
-    opacity: 0;
-    max-width: 0;
-    -webkit-transition: opacity 0.25s, max-width 0.45s;
-    -moz-transition: opacity 0.25s, max-width 0.45s;
-    -o-transition: opacity 0.25s, max-width 0.45s;
-    transition: opacity 0.25s, max-width 0.45s;
-    Duration fixed since we animate additional hidden width  
-}
-
-.has-spinner.active {
-    cursor: progress;
-}
-
-.has-spinner.active .spinner {
-    opacity: 1;
-    max-width: 50px;
-     More than it will ever come, notice that this affects on animation duration
-} */
-
-
-/* spinner for button end*/
 
 
 /* spinner for div */
