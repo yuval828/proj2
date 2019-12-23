@@ -9,6 +9,8 @@ $(() => {
     $("#LiveReports").click(() => {
         const symbols = switchedArray.map(t => t.symbol).join(",");
         let priceCoinArr = [];
+        let dataPoints = [];
+
         $("#allCoins").empty();
         $(`#headerSpinner`).addClass("loader");
         $(".bgimg-1").css({ "background-image": `url("img/LiveReports.jpg")`, "min-height": "50%" });
@@ -57,9 +59,6 @@ $(() => {
                 title: {
                     text: `${symbols} to USD`
                 },
-                // subtitles: [{
-                //     text: "Click Legend to Hide or Unhide Data Series"
-                // }],
                 axisX: {
                     title: "time"
                 },
@@ -79,56 +78,16 @@ $(() => {
                     itemclick: toggleDataSeries
                 },
                 data: [{
-                        type: "spline",
-                        name: switchedArray[0].symbol,
-                        showInLegend: true,
-                        xValueFormatString: "mm:ss",
-                        yValueFormatString: "$#,##0.####",
-                        dataPoints: [
-                            { x: new Date(), y: priceCoinArr[0] },
-                            // { x: new Date(2016, 1, 1), y: `${priceCoinArr[0]}` },
-                            // { x: new Date(), y: 10 },
-                            // { x: new Date(), y: 20 }
-                        ]
-                    },
-                    // {
-                    //     type: "spline",
-                    //     name: switchedArray[1].symbol,
-                    //     showInLegend: true,
-                    //     xValueFormatString: "mm:ss",
-                    //     yValueFormatString: "$#,##0.#",
-                    //     dataPoints: []
-
-                    //         // { x: new Date(2016, 1, 1), y: `${priceCoinArr[0]}` },
-                    //         // { x: new Date(), y: 10 },
-                    //         // { x: new Date(), y: 20 }
-
-                    // },
+                    type: "spline",
+                    showInLegend: true,
+                    name: switchedArray[0].symbol,
+                    xValueFormatString: "mm:ss",
+                    yValueFormatString: "$#,##0.####",
+                    dataPoints: dataPoints
+                }]
 
 
-                    // {
-                    //     type: "spline",
-                    //     name: "price",
-                    //     axisYType: "secondary",
-                    //     showInLegend: true,
-                    //     xValueFormatString: "MMM YYYY",
-                    //     yValueFormatString: "$#,##0.#",
-                    //     dataPoints: [
-                    //         { x: new Date(2016, 0, 1), y: 19034.5 },
-                    //         { x: new Date(2016, 1, 1), y: 20015 },
-                    //         { x: new Date(2016, 2, 1), y: 27342 },
-                    //         { x: new Date(2016, 3, 1), y: 20088 },
-                    //         { x: new Date(2016, 4, 1), y: 20234 },
-                    //         { x: new Date(2016, 5, 1), y: 29034 },
-                    //         { x: new Date(2016, 6, 1), y: 30487 },
-                    //         { x: new Date(2016, 7, 1), y: 32523 },
-                    //         { x: new Date(2016, 8, 1), y: 20234 },
-                    //         { x: new Date(2016, 9, 1), y: 27234 },
-                    //         { x: new Date(2016, 10, 1), y: 33548 },
-                    //         { x: new Date(2016, 11, 1), y: 32534 }
-                    //     ]
-                    // }
-                ]
+
             };
 
             $("#chartContainer").CanvasJSChart(options);
@@ -141,8 +100,6 @@ $(() => {
                 }
                 e.chart.render();
             }
-
-
         }
 
         // update chart every second
@@ -152,6 +109,17 @@ $(() => {
             getAjaxData(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${symbols}&tsyms=USD`, response => drawGraph(response));
             // dataPoints. x: new Date().getSeconds(), y: priceCoinArr[1] },
 
+
+            y: priceCoinArr[index]
+
+            dataPoints.push({
+
+
+
+                y: priceCoinArr[0]
+
+
+            });
         }
 
 
