@@ -323,4 +323,26 @@ $(() => {
     }
     /*search a coin end*/
 
+    //go to about if about press
+    $("#About").click(() => {
+        $("#allCoins").empty();
+        $("#chartContainer").empty();
+        $(`footer`).empty();
+        $(`#headerSpinner`).addClass("loader");
+        $(".bgimg-1").css({ "background-image": `url("img/aboutBobi.jpg")`, "min-height": "100%" });
+        $("#firstParalex").html(`
+            ברוכים הבאים, שמי יובל יצחק <br>
+            בודק תוכנה בחברת השכר מיכפל<br>
+            בן 37, נשוי לטל <br>
+            גר בגבעתיים <br>
+            ומאוד אוהב את הכלבים שלי בובי וליבי
+        `);
+        $(".bgimg-2").css({ "background-image": `url("img/aboutLibi.jpg")`, "min-height": "100%" });
+        $("#secondParalex").html(`
+            Full Stack Web Developer <br>
+            jQuery-AJAX API Project <br>
+        `);
+        $(`#headerSpinner`).removeClass("loader");
+
+    });
 });
