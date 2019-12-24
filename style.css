@@ -1,4 +1,4 @@
-/* the nev will stay on screen */
+/* go up button */
 
 #goUp {
     position: fixed;
@@ -12,10 +12,31 @@
     border: 1px solid #73AD21;
 }
 
+
+/* navbar input and buttons */
+
 .my-2 {
     font-size: 1.3rem;
     padding: .375rem;
 }
+
+input {
+    padding: 15px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid red;
+    font-size: large;
+    text-align: center;
+}
+
+button:hover,
+#goUp:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+/* the nev will stay on screen */
 
 .sticky {
     position: sticky;
@@ -24,6 +45,9 @@
     z-index: 150;
     width: 100%;
 }
+
+
+/* mote info and coin card */
 
 .getInfo {
     position: absolute;
@@ -83,21 +107,6 @@ img {
 
 .form-inline {
     flex-flow: nowrap;
-}
-
-input {
-    padding: 15px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 2px solid red;
-    font-size: large;
-    text-align: center;
-}
-
-button:hover,
-#goUp:hover {
-    background-color: #4CAF50;
-    color: white;
 }
 
 

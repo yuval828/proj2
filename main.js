@@ -287,7 +287,9 @@ $(() => {
         let coinAtList = false;
         if (searchCoin == "") { //if search is empty
             $(`#headerSpinner`).removeClass("loader");
-            $("#secondParalex").text("please enter a Symbol name like: btc");
+            alert(`
+                please enter a Symbol name like: btc
+            `);
             return;
         }
 
@@ -304,8 +306,9 @@ $(() => {
         if (!coinAtList) {
             $(`#headerSpinner`).removeClass("loader");
             alert(`
-            The coin you entered is not on the list \n
-            please enter a correct Coin Symbol name like: btc`);
+                The coin you entered is not on the list \n
+                please enter a correct Coin Symbol name like: btc
+            `);
         }
     });
 

@@ -34,7 +34,7 @@ $(() => {
 
         updateData(); //get first time data
 
-        // update chart every second
+        // update chart every 2 second
         interval = setInterval(function() {
             updateData();
         }, 2000);
@@ -65,7 +65,7 @@ $(() => {
                 return
             }
             const now = new Date()
-            for (const coin in response) {
+            for (const coin in response) { //will get a coin and make a dataItem of it
                 const price = response[coin].USD;
                 let dataItem = data.find(t => t.name == coin)
                 if (!dataItem) {
@@ -82,7 +82,7 @@ $(() => {
                 dataItem.dataPoints.push({ x: now, y: price })
             }
 
-            const options = {
+            const options = { //chart options
                 animationEnabled: true,
                 title: {
                     text: `${symbols} to USD`,
@@ -109,12 +109,12 @@ $(() => {
                 data: data,
             };
 
-            if (!chart) {
+            if (!chart) { //if first time make chart
                 chart = new CanvasJS.Chart("chartContainer", options);
             }
-            chart.render()
+            chart.render(); //render the chart
 
-            function toggleDataSeries(e) {
+            function toggleDataSeries(e) { //the legends down the chart
                 if (typeof e.dataSeries.visible === "undefined" || e.dataSeries.visible) {
                     e.dataSeries.visible = false;
                 } else {
