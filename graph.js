@@ -8,14 +8,19 @@ $(() => {
 
     /*LiveReports graph*/
     $("#LiveReports").click(() => {
-        if (interval) {
-            clearInterval(interval)
-            interval = null
+        clearGraph()
+
+        function clearGraph() {
+            if (interval) {
+                clearInterval(interval)
+                interval = null
+            }
+            if (chart) {
+                chart.destroy()
+                chart = null
+            }
         }
-        if (chart) {
-            chart.destroy()
-            chart = null
-        }
+
         const symbols = switchedArray.map(t => t.symbol).join(","); //get all the symbols of coins we choosed
 
         $("#allCoins").empty();
@@ -59,9 +64,11 @@ $(() => {
 
         function drawGraph(response) {
             if (response.Response === "Error") {
-                $("#secondParalex").text(`
-                    The Coins you choosed didnt return any value
+                $("#secondParalex").html(`
+                    The Coins you choosed didnt return any value \n
+                    please go to home and choose Coins or search your Coin 
                 `);
+                clearGraph()
                 return
             }
             const now = new Date()
