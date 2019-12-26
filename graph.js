@@ -94,6 +94,9 @@ $(() => {
                 title: {
                     text: `${symbols} to USD`,
                 },
+                subtitles: [{
+                    text: "If you dont see on the graph one or more of the coins you choosed, it is because they dont have live price value",
+                }],
                 axisX: {
                     title: "time",
                     valueFormatString: "mm:ss",
