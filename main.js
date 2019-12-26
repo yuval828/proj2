@@ -23,6 +23,7 @@ $(() => {
 
     //the homepage we will see at refresh, pressing home or pressing X at search or search
     function HomePageDisplay() {
+        clearGraph();
         $(`footer`).html(`<div id="allCoins" class="row bgimg-3"></div>`);
         $(`#headerSpinner`).addClass("loader");
         $(".bgimg-1").css({ "background-image": `url("img/homeHeader.jpg")`, "min-height": "50%" });
@@ -328,6 +329,7 @@ $(() => {
 
     //go to about if about press
     $("#About").click(() => {
+        clearGraph();
         $("#allCoins").empty();
         $("#chartContainer").empty();
         $(`footer`).empty();

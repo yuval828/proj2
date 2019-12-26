@@ -1,28 +1,28 @@
 /// <reference path="jquery-3.4.1.js" />
 "use strict";
 
+let interval;
+let chart;
+
+//will clear the interval and will clean up any references stored to the chart object
+function clearGraph() {
+    if (interval) {
+        clearInterval(interval)
+        interval = null
+    }
+    if (chart) {
+        chart.destroy()
+        chart = null
+    }
+}
+
+
 // from about/graph - search - bring to home
 $(() => {
-    let interval;
-    let chart;
-
     /*LiveReports graph*/
     $("#LiveReports").click(() => {
-        clearGraph()
-
-        function clearGraph() {
-            if (interval) {
-                clearInterval(interval)
-                interval = null
-            }
-            if (chart) {
-                chart.destroy()
-                chart = null
-            }
-        }
-
+        clearGraph();
         const symbols = switchedArray.map(t => t.symbol).join(","); //get all the symbols of coins we choosed
-
         $("#allCoins").empty();
         $(`#headerSpinner`).addClass("loader");
         $(".bgimg-1").css({ "background-image": `url("img/LiveReports.jpg")`, "min-height": "50%" });
@@ -68,7 +68,6 @@ $(() => {
                     The Coins you choosed didnt return any value \n
                     please go to home and choose Coins or search your Coin 
                 `);
-                clearGraph()
                 return
             }
             const now = new Date()
